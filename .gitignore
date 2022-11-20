@@ -1,0 +1,8 @@
+__pycache__
+*cache
+.env
+.venv
+dist
+.coverage
+coverage.xml
+db.sqlite3
