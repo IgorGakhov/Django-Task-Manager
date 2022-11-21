@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/png" href="https://cdn.jim-nielsen.com/ios/512/meistertask-task-management-2015-07-29.png" />
+        {# Load the tag library #}
+        {% load bootstrap4 %}
+    </head>
+    <body class="d-flex flex-column min-vh-100">
+        <header>
+            {% include 'components/navbar.html' %}
+        </header>
+        <main class="container wrapper flex-grow-1">
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <div class="container flex-column my-5 pt-4 border-top">
+                <img class='ml-2' src="https://cdn2.hexlet.io/assets/favicon-9213ff1fc34b4e2da96c3b3eb582b3d10180b250e993141d7928d6aa1f5647c1.ico" alt="Hexlet Logo" height="16px">
+                <a target="_blank" href="https://ru.hexlet.io">Hexlet</a>
+                <img class='ml-2' src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub Logo" height="16px">
+                <a target="_blank" href="https://github.com/IgorGakhov/python-project-52">{% trans "Source" %}</a>
+            </div>
+        </footer>
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+    </body>
+</html>

@@ -7,6 +7,12 @@ lint:
 freeze:
 	poetry run pip --disable-pip-version-check list --format=freeze > requirements.txt
 
+translate-make:
+	django-admin makemessages -l ru
+
+translate-compile:
+	django-admin compilemessages
+
 build:
 	poetry build
 
