@@ -4,13 +4,6 @@ install:
 lint:
 	poetry run flake8 task_manager
 
-test:
-	poetry run pytest -s
-	poetry run pytest --cov=task_manager
-
-test-coverage:
-	poetry run pytest --cov=task_manager --cov-report xml
-
 freeze:
 	poetry run pip --disable-pip-version-check list --format=freeze > requirements.txt
 

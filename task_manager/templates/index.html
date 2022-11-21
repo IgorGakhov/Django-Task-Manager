@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Task Manager</title>
+        <link rel="icon" type="image/png" href="https://cdn.jim-nielsen.com/ios/512/meistertask-task-management-2015-07-29.png" />
+        {# Load the tag library #}
+        {% load bootstrap4 %}
+    </head>
+    <body class="d-flex flex-column min-vh-100">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+            <a class="navbar-brand" href="/">Task manager</a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/">Users</a>
+                    </li>  
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">Sign in</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="/users/create/">Sing up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container wrapper flex-grow-1">
+            <h1 class="my-4"></h1>
+            <div class="card">
+            <div class="card-body p-5 bg-light">
+                <h1 class="my-4 display-4">Welcome to Task Manager!</h1>
+                <p class="lead"><i>Simple and functional task manager.</i></p>
+                <p class="lead">It allows you to set tasks, assign performers and change their statuses. Registration and authentication are required to work with the system.</p>
+                <hr>
+                <a class="btn btn-primary btn-lg" href="/login/">Get Started</a>
+            </div>
+            </div>
+        </div>
+        <footer>
+            <div class="container flex-column my-5 pt-4 border-top">
+                <img class='ml-2' src="https://cdn2.hexlet.io/assets/favicon-9213ff1fc34b4e2da96c3b3eb582b3d10180b250e993141d7928d6aa1f5647c1.ico" alt="Hexlet Logo" height="16px">
+                <a target="_blank" href="https://ru.hexlet.io">Hexlet</a>
+                <img class='ml-2' src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub Logo" height="16px">
+                <a target="_blank" href="https://github.com/IgorGakhov/python-project-52">Source</a>
+            </div>
+        </footer>
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+    </body>
+</html>
