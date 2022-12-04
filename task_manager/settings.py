@@ -49,7 +49,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'task_manager'
+    'task_manager',
+
+    # Local applications:
+    'task_manager.users'
 ]
 
 MIDDLEWARE = [
@@ -95,6 +98,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'users.Users'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -127,8 +131,8 @@ USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = (
-    ("en", "English"),
-    ("ru", "Russian")
+    ('en', 'English'),
+    ('ru', 'Russian')
 )
 
 LOCALE_PATHS = (
@@ -140,9 +144,6 @@ LOCALE_PATHS = (
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Extra places for collectstatic to find static files.

@@ -13,6 +13,12 @@ translate-make:
 translate-compile:
 	django-admin compilemessages
 
+migrations:
+	poetry run python manage.py makemigrations
+
+migrate:
+	poetry run python manage.py migrate
+
 build:
 	poetry build
 
