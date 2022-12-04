@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-04 20:22+0300\n"
+"POT-Creation-Date: 2022-12-04 23:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,24 +28,29 @@ msgstr "Исходный код"
 msgid "Task manager"
 msgstr "Менеджер задач"
 
-#: task_manager/templates/components/navbar.html:11
+#: task_manager/templates/components/navbar.html:10
 #: task_manager/users/constants.py:17 task_manager/users/constants.py:19
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/templates/components/navbar.html:16
-msgid "Sign in"
-msgstr "Вход"
-
 #: task_manager/templates/components/navbar.html:19
-msgid "Sign up"
+msgid "Logout"
+msgstr "Выход"
+
+#: task_manager/templates/components/navbar.html:23
+msgid "Sign Up"
 msgstr "Регистрация"
+
+#: task_manager/templates/components/navbar.html:26
+msgid "Log In"
+msgstr "Вход"
 
 #: task_manager/templates/index.html:5 task_manager/templates/index.html:12
 msgid "Simple and functional task manager."
 msgstr "Простой и функциональный планировщик задач."
 
 #: task_manager/templates/index.html:6
+#: task_manager/templates/registration/login.html:6
 #: task_manager/users/templates/users/users_confirm_delete.html:6
 #: task_manager/users/templates/users/users_form.html:6
 #: task_manager/users/templates/users/users_list.html:6
@@ -67,6 +72,16 @@ msgstr ""
 #: task_manager/templates/index.html:15
 msgid "Get Started"
 msgstr "Начать работу"
+
+#: task_manager/templates/registration/login.html:5
+msgid "Log in into Task Manager."
+msgstr "Вход в Менеджер задач."
+
+#: task_manager/templates/registration/login.html:6
+#: task_manager/templates/registration/login.html:9
+#: task_manager/templates/registration/login.html:13
+msgid "Login"
+msgstr "Вход"
 
 #: task_manager/users/constants.py:18
 msgid "List of Task Manager Users."

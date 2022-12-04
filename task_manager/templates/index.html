@@ -12,7 +12,7 @@
         <p class="lead"><i>{% trans "Simple and functional task manager." %}</i></p>
         <p class="lead">{% trans "It allows you to set tasks, assign performers and change their statuses. Registration and authentication are required to work with the system." %}</p>
         <hr>
-        <a class="btn btn-primary btn-lg" href="/login/">{% trans "Get Started" %}</a>
+        <a class="btn btn-primary btn-lg" href="{% url 'login' %}">{% trans "Get Started" %}</a>
     </div>
 </div>
 {% endblock %}
