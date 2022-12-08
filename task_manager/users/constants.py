@@ -4,6 +4,20 @@ from django.utils.translation import gettext_lazy
 from django.urls import reverse_lazy
 from typing import Dict, Final, TypeAlias
 
+from task_manager.constants import LOGIN
+
+
+# Route names
+CREATE_USER: Final[str] = 'sign_up'
+LIST_USERS: Final[str] = 'users'
+UPDATE_USER: Final[str] = 'user_update'
+DELETE_USER: Final[str] = 'user_delete'
+
+
+# Reverses
+REVERSE_USERS: Final[TypeAlias] = reverse_lazy(LIST_USERS)
+REVERSE_LOGIN: Final[TypeAlias] = reverse_lazy(LOGIN)
+
 
 # Context Fields
 PAGE_TITLE: Final[str] = 'page_title'
@@ -31,6 +45,13 @@ DELETE_DESCRIPTION: str = gettext_lazy('User deleting on Task Manager.')
 DELETE_H1: str = gettext_lazy('Deleting a user')
 
 
+# Messages
+MSG_REGISTERED: str = gettext_lazy('User successfully registered')
+MSG_UPDATED: str = gettext_lazy('User successfully updated')
+MSG_DELETED: str = gettext_lazy('User successfully deleted')
+MSG_UNPERMISSION_TO_MODIFY: str = gettext_lazy('You do not have permission to modify another user')
+
+
 # Forms
 # Fields
 USERNAME: Final[str] = 'username'
@@ -51,10 +72,6 @@ LAST_NAME_HELP_TEXT: str = gettext_lazy('Required. Please enter your real surnam
 REGISTER_BUTTON: str = gettext_lazy('Register')
 UPDATE_BUTTON: str = gettext_lazy('Change')
 DELETE_BUTTON: str = gettext_lazy('Yes, delete')
-
-
-# Reverses
-REVERSE_USERS: Final[TypeAlias] = reverse_lazy('users')
 
 
 # Contexts

@@ -1,11 +1,17 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 from django.forms import BaseForm
+from django.http import HttpRequest, HttpResponse
 from typing import Dict, Any, Union, Callable, Type
 
 from .models import Users
 from .forms import UserRegistrationForm, UserEditingForm
-from .constants import REVERSE_USERS, \
-    CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE
+from .constants import REVERSE_USERS, REVERSE_LOGIN, \
+    CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE, \
+    MSG_REGISTERED, MSG_UPDATED, MSG_DELETED, MSG_UNPERMISSION_TO_MODIFY
 
 
 class UsersListView(ListView):
@@ -20,11 +26,12 @@ class UsersListView(ListView):
         return context
 
 
-class UserCreateView(CreateView):
+class UserCreateView(SuccessMessageMixin, CreateView):
     '''Create a user.'''
     model: Type[Users] = Users
     form_class: Type[BaseForm] = UserRegistrationForm
-    success_url: Union[str, Callable[..., Any]] = REVERSE_USERS
+    success_url: Union[str, Callable[..., Any]] = REVERSE_LOGIN
+    success_message: str = MSG_REGISTERED
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         '''Sets additional meta information and a button.'''
@@ -33,11 +40,12 @@ class UserCreateView(CreateView):
         return context
 
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     '''Change a user.'''
     model: Type[Users] = Users
     form_class: Type[BaseForm] = UserEditingForm
     success_url: Union[str, Callable[..., Any]] = REVERSE_USERS
+    success_message: str = MSG_UPDATED
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         '''Sets additional meta information and a button.'''
@@ -45,15 +53,34 @@ class UserUpdateView(UpdateView):
         context.update(CONTEXT_UPDATE)
         return context
 
+    def dispatch(self, request: HttpRequest,
+                 *args: Any, **kwargs: Any) -> HttpResponse:
+        '''Specifies access settings for the current user.
+        Provides access if the user is authenticated.'''
+        if request.user.id != self.get_object().id:
+            messages.error(self.request, MSG_UNPERMISSION_TO_MODIFY)
+            return redirect(REVERSE_USERS)
+        return super().dispatch(request, *args, **kwargs)
 
-class UserDeleteView(DeleteView):
+
+class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     '''Delete a user.'''
     model: Type[Users] = Users
     context_object_name: str = 'user'
     success_url: Union[str, Callable[..., Any]] = REVERSE_USERS
+    success_message: str = MSG_DELETED
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         '''Sets additional meta information and a button.'''
         context: Dict[str, Any] = super().get_context_data(**kwargs)
         context.update(CONTEXT_DELETE)
         return context
+
+    def dispatch(self, request: HttpRequest,
+                 *args: Any, **kwargs: Any) -> HttpResponse:
+        '''Specifies access settings for the current user.
+        Provides access if the user is authenticated.'''
+        if request.user.id != self.get_object().id:
+            messages.error(self.request, MSG_UNPERMISSION_TO_MODIFY)
+            return redirect(REVERSE_USERS)
+        return super().dispatch(request, *args, **kwargs)

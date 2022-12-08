@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-04 23:39+0300\n"
+"POT-Creation-Date: 2022-12-08 21:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,14 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
+#: task_manager/constants.py:14
+msgid "You are logged in"
+msgstr "Вы залогинены"
+
+#: task_manager/constants.py:15
+msgid "Logged out successfully"
+msgstr "Вы разлогинены"
+
 #: task_manager/templates/components/footer.html:7
 msgid "Source"
 msgstr "Исходный код"
@@ -29,7 +37,7 @@ msgid "Task manager"
 msgstr "Менеджер задач"
 
 #: task_manager/templates/components/navbar.html:10
-#: task_manager/users/constants.py:17 task_manager/users/constants.py:19
+#: task_manager/users/constants.py:31 task_manager/users/constants.py:33
 msgid "Users"
 msgstr "Пользователи"
 
@@ -83,67 +91,83 @@ msgstr "Вход в Менеджер задач."
 msgid "Login"
 msgstr "Вход"
 
-#: task_manager/users/constants.py:18
+#: task_manager/users/constants.py:32
 msgid "List of Task Manager Users."
 msgstr "Список всех пользователей Менеджера задач."
 
-#: task_manager/users/constants.py:21 task_manager/users/constants.py:23
+#: task_manager/users/constants.py:35 task_manager/users/constants.py:37
 msgid "Registration"
 msgstr "Регистрация"
 
-#: task_manager/users/constants.py:22
+#: task_manager/users/constants.py:36
 msgid "User Registration on Task Manager."
 msgstr "Регистрация пользователя в Менеджере задач."
 
-#: task_manager/users/constants.py:25
+#: task_manager/users/constants.py:39
 msgid "User editing"
 msgstr "Изменение пользователя"
 
-#: task_manager/users/constants.py:26
+#: task_manager/users/constants.py:40
 msgid "User editing on Task Manager."
 msgstr "Изменение пользователя в Менеджере задач."
 
-#: task_manager/users/constants.py:27
+#: task_manager/users/constants.py:41
 msgid "User change"
 msgstr "Имя пользователя"
 
-#: task_manager/users/constants.py:29
+#: task_manager/users/constants.py:43
 msgid "User deleting"
 msgstr "Удаление пользователя"
 
-#: task_manager/users/constants.py:30
+#: task_manager/users/constants.py:44
 msgid "User deleting on Task Manager."
 msgstr "Удаление пользователя в Менеджере задач."
 
-#: task_manager/users/constants.py:31
+#: task_manager/users/constants.py:45
 msgid "Deleting a user"
 msgstr "Удаление пользователя"
 
-#: task_manager/users/constants.py:43
+#: task_manager/users/constants.py:49
+msgid "User successfully registered"
+msgstr "Пользователь успешно зарегистрирован"
+
+#: task_manager/users/constants.py:50
+msgid "User successfully updated"
+msgstr "Пользователь успешно изменён"
+
+#: task_manager/users/constants.py:51
+msgid "User successfully deleted"
+msgstr "Пользователь успешно удалён"
+
+#: task_manager/users/constants.py:52
+msgid "You do not have permission to modify another user"
+msgstr "У вас нет прав для изменения другого пользователя"
+
+#: task_manager/users/constants.py:64
 msgid "First Name"
 msgstr "Имя"
 
-#: task_manager/users/constants.py:44
+#: task_manager/users/constants.py:65
 msgid "Last Name"
 msgstr "Фамилия"
 
-#: task_manager/users/constants.py:46
+#: task_manager/users/constants.py:67
 msgid "Required. Please enter your real name."
 msgstr "Пожалуйста, введите настоящее имя."
 
-#: task_manager/users/constants.py:47
+#: task_manager/users/constants.py:68
 msgid "Required. Please enter your real surname."
 msgstr "Пожалуйста, введите настоящую фамилию."
 
-#: task_manager/users/constants.py:51
+#: task_manager/users/constants.py:72
 msgid "Register"
 msgstr "Зарегистрироваться"
 
-#: task_manager/users/constants.py:52
+#: task_manager/users/constants.py:73
 msgid "Change"
 msgstr "Обновить"
 
-#: task_manager/users/constants.py:53
+#: task_manager/users/constants.py:74
 msgid "Yes, delete"
 msgstr "Да, удалить"
 
