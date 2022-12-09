@@ -4,13 +4,21 @@ install:
 lint:
 	poetry run flake8 task_manager
 
+test:
+	poetry run python3 manage.py test
+
+test-coverage:
+	poetry run coverage run --source='.' manage.py test
+	poetry run coverage report
+	poetry run coverage xml
+
 freeze:
 	poetry run pip --disable-pip-version-check list --format=freeze > requirements.txt
 
-translate-make:
+prepare-translations:
 	django-admin makemessages -l ru
 
-translate-compile:
+compile-translations:
 	django-admin compilemessages
 
 migrations:
@@ -38,6 +46,8 @@ fast-check:
 	make package-force-reinstall
 	echo "\n\n\n ! Lint checkup process...\n"
 	make lint
+	echo "\n\n\n ! Test checkup process...\n"
+	make test
 
 dev-start:
 	poetry run python manage.py runserver
