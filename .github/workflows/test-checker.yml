@@ -17,10 +17,13 @@ jobs:
         pip install poetry
         make install
     - name: Run test checks
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: make test
     - name: Publish code coverage report
       uses: paambaati/codeclimate-action@v3.0.0
       env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
           coverageCommand: make test-coverage
