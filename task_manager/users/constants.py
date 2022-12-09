@@ -2,7 +2,7 @@
 
 from django.utils.translation import gettext_lazy
 from django.urls import reverse_lazy
-from typing import Dict, Final, TypeAlias
+from typing import Dict, Final
 
 from task_manager.constants import LOGIN
 
@@ -15,8 +15,8 @@ DELETE_USER: Final[str] = 'user_delete'
 
 
 # Reverses
-REVERSE_USERS: Final[TypeAlias] = reverse_lazy(LIST_USERS)
-REVERSE_LOGIN: Final[TypeAlias] = reverse_lazy(LOGIN)
+REVERSE_USERS: Final = reverse_lazy(LIST_USERS)
+REVERSE_LOGIN: Final = reverse_lazy(LOGIN)
 
 
 # Context Fields
