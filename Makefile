@@ -5,12 +5,12 @@ lint:
 	poetry run flake8 task_manager
 
 test:
-	poetry run python3 manage.py test
+	poetry run python3 manage.py test ./task_manager/tests/
 
 test-coverage:
-	poetry run coverage run --source='.' manage.py test
-	poetry run coverage report
-	poetry run coverage xml
+	poetry run coverage run manage.py test ./task_manager/tests/
+	poetry run coverage report --omit=*/tests/*,*/migrations/*,*/__init__.py
+	poetry run coverage xml --omit=*/tests/*,*/migrations/*,*/__init__.py
 
 freeze:
 	poetry run pip --disable-pip-version-check list --format=freeze > requirements.txt
@@ -51,3 +51,6 @@ fast-check:
 
 dev-start:
 	poetry run python manage.py runserver
+
+# Database dump example:
+# poetry run ./manage.py dumpdata {app:users}.{db:users} --indent {indent:2} > {path:tests/fixtures}/{name:users}.{format:json}

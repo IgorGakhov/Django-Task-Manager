@@ -1,6 +1,7 @@
 "Constants for Task Manager main application."
 
 from django.utils.translation import gettext_lazy
+from django.urls import reverse_lazy
 from typing import Final
 
 
@@ -8,6 +9,12 @@ from typing import Final
 HOME: Final[str] = 'home'
 LOGIN: Final[str] = 'login'
 LOGOUT: Final[str] = 'logout'
+
+
+# Reverses
+REVERSE_HOME: Final = reverse_lazy(HOME)
+REVERSE_LOGIN: Final = reverse_lazy(LOGIN)
+REVERSE_LOGOUT: Final = reverse_lazy(LOGOUT)
 
 
 # Messages
