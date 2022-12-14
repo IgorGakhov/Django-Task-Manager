@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'task_manager',
 
     # Local applications:
-    'task_manager.users'
+    'task_manager.users',
+    'task_manager.statuses'
 ]
 
 MIDDLEWARE = [

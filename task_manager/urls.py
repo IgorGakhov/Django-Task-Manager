@@ -33,5 +33,6 @@ urlpatterns: List[URLPattern] = [
     path('logout/', UserLogoutView.as_view(), name=LOGOUT),
 
     # Apps:
-    path('users/', include('task_manager.users.urls'))
+    path('users/', include('task_manager.users.urls')),
+    path('statuses/', include('task_manager.statuses.urls'))
 ]

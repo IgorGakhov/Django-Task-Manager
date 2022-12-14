@@ -1,0 +1,15 @@
+{% extends "components/base.html" %}
+
+{% load i18n bootstrap4 %}
+
+{% block description %}{{ page_description }}{% endblock %}
+{% block title %}{{ page_title }} | {% translate "Task Manager" %}{% endblock %}
+
+{% block content %}
+    <h1 class="my-4">{{ page_h1 }}</h1>
+    <form class="form" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button button_text button_type="submit" button_class="btn btn-primary" %}
+    </form>
+{% endblock %}
