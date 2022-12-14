@@ -7,7 +7,7 @@ from django.forms import BaseForm
 from django.http import HttpRequest, HttpResponse
 from typing import Dict, Any, Union, Callable, Type
 
-from .models import Users
+from .models import User
 from .forms import UserRegistrationForm, UserEditingForm
 from .constants import REVERSE_USERS, REVERSE_LOGIN, \
     CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE, \
@@ -16,7 +16,7 @@ from .constants import REVERSE_USERS, REVERSE_LOGIN, \
 
 class UsersListView(ListView):
     '''Show the list of users.'''
-    model: Type[Users] = Users
+    model: Type[User] = User
     context_object_name: str = 'users'
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -28,7 +28,7 @@ class UsersListView(ListView):
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     '''Create a user.'''
-    model: Type[Users] = Users
+    model: Type[User] = User
     form_class: Type[BaseForm] = UserRegistrationForm
     success_url: Union[str, Callable[..., Any]] = REVERSE_LOGIN
     success_message: str = MSG_REGISTERED
@@ -42,7 +42,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     '''Change a user.'''
-    model: Type[Users] = Users
+    model: Type[User] = User
     form_class: Type[BaseForm] = UserEditingForm
     success_url: Union[str, Callable[..., Any]] = REVERSE_USERS
     success_message: str = MSG_UPDATED
@@ -65,7 +65,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     '''Delete a user.'''
-    model: Type[Users] = Users
+    model: Type[User] = User
     context_object_name: str = 'user'
     success_url: Union[str, Callable[..., Any]] = REVERSE_USERS
     success_message: str = MSG_DELETED

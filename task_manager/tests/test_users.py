@@ -3,12 +3,11 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.forms.utils import ErrorDict
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.manager import BaseManager
 
 from http import HTTPStatus
 from typing import List, Dict
 
-from task_manager.users.models import Users
+from task_manager.users.models import User
 from task_manager.users.constants import UPDATE_USER, DELETE_USER, \
     TEMPLATE_CREATE, TEMPLATE_LIST, TEMPLATE_UPDATE, TEMPLATE_DELETE, \
     REVERSE_USERS, REVERSE_CREATE, REVERSE_LOGIN
@@ -16,7 +15,7 @@ from task_manager.users.constants import UPDATE_USER, DELETE_USER, \
 
 class UsersTest(TestCase):
 
-    fixtures = ['users.json']
+    fixtures = ['user.json']
 
     VALID_DATA: Dict[str, str] = {
         'username': '@The-Boy+Who_L1ved.',
@@ -28,26 +27,17 @@ class UsersTest(TestCase):
 
     def setUp(self) -> None:
         self.client: Client = Client()
-        self.user1: Users = Users.objects.get(pk=1)
-        self.user2: Users = Users.objects.get(pk=2)
-        self.user3: Users = Users.objects.get(pk=3)
+        self.user1: User = User.objects.get(pk=1)
+        self.user2: User = User.objects.get(pk=2)
+        self.user3: User = User.objects.get(pk=3)
 
     # DB TESTING
 
-    def assertUsers(self, users, user_data) -> None:
-        response: HttpResponse = self.client.get(REVERSE_USERS)
-
-        users: BaseManager[Users] = Users.objects.all()
-        self.assertQuerysetEqual(
-            response.context['users'],
-            users,
-            ordered=False,
-        )
-
-        self.assertEqual(users.__str__(), user_data['name'])
-        self.assertEqual(users.username, user_data['username'])
-        self.assertEqual(users.first_name, user_data['first_name'])
-        self.assertEqual(users.last_name, user_data['last_name'])
+    def assertUser(self, user, user_data) -> None:
+        self.assertEqual(user.__str__(), user_data['name'])
+        self.assertEqual(user.username, user_data['username'])
+        self.assertEqual(user.first_name, user_data['first_name'])
+        self.assertEqual(user.last_name, user_data['last_name'])
 
     def test_user_exists(self) -> None:
         response: HttpResponse = self.client.get(REVERSE_USERS)
@@ -199,7 +189,7 @@ class UsersTest(TestCase):
         params: Dict[str, str] = UsersTest.VALID_DATA.copy()
 
         response: HttpResponse = self.client.post(ROUTE, data=params)
-        self.assertTrue(Users.objects.get(id=4))
+        self.assertTrue(User.objects.get(id=4))
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_LOGIN)
 
@@ -216,18 +206,18 @@ class UsersTest(TestCase):
     def test_user_update(self) -> None:
         ROUTE = reverse_lazy(UPDATE_USER, args=[1])
 
-        original_objs_count: int = len(Users.objects.all())
+        original_objs_count: int = len(User.objects.all())
         params: Dict[str, str] = UsersTest.VALID_DATA
         params.update({'email': 'harry_potter@hogwarts.mail'})
 
         self.client.force_login(self.user1)
         response: HttpResponse = self.client.post(ROUTE, data=params)
-        final_objs_count: int = len(Users.objects.all())
+        final_objs_count: int = len(User.objects.all())
         self.assertTrue(final_objs_count == original_objs_count)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_USERS)
 
-        updated_user: Users = Users.objects.get(id=1)
+        updated_user: User = User.objects.get(id=1)
         self.assertEqual(updated_user.username, params['username'])
         self.assertEqual(updated_user.first_name, params['first_name'])
         self.assertEqual(updated_user.last_name, params['last_name'])
@@ -246,13 +236,13 @@ class UsersTest(TestCase):
     def test_user_delete(self) -> None:
         ROUTE = reverse_lazy(DELETE_USER, args=[1])
 
-        original_objs_count: int = len(Users.objects.all())
+        original_objs_count: int = len(User.objects.all())
 
         self.client.force_login(self.user1)
         response: HttpResponse = self.client.post(ROUTE)
-        final_objs_count: int = len(Users.objects.all())
+        final_objs_count: int = len(User.objects.all())
         self.assertTrue(final_objs_count == original_objs_count - 1)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_USERS)
         with self.assertRaises(ObjectDoesNotExist):
-            Users.objects.get(id=1)
+            User.objects.get(id=1)

@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from http import HTTPStatus
 from typing import Dict
 
-from task_manager.users.models import Users
+from task_manager.users.models import User
 from task_manager.constants import HOME, TEMPLATE_INDEX, \
     REVERSE_HOME, REVERSE_LOGIN, REVERSE_LOGOUT
 from task_manager.users.constants import UPDATE_USER, DELETE_USER
@@ -14,7 +14,7 @@ from task_manager.users.constants import UPDATE_USER, DELETE_USER
 
 class HomePageTest(TestCase):
 
-    fixtures = ['users.json']
+    fixtures = ['user.json']
 
     def test_user_update_view(self) -> None:
         ROUTE = reverse_lazy(HOME)
@@ -26,7 +26,7 @@ class HomePageTest(TestCase):
 
 class AuthenticationTest(TestCase):
 
-    fixtures = ['users.json']
+    fixtures = ['user.json']
 
     def setUp(self) -> None:
         self.client: Client = Client()
@@ -34,7 +34,7 @@ class AuthenticationTest(TestCase):
             'username': 'testuser',
             'password': 'secret_password'
         }
-        self.user: Users = Users.objects.create_user(**self.credentials)
+        self.user: User = User.objects.create_user(**self.credentials)
 
     def test_login(self) -> None:
         # Send login data and checking if a redirect exists
@@ -59,7 +59,7 @@ class AuthenticationTest(TestCase):
 
     def test_inaccessibility_of_pages_by_auth(self) -> None:
         accessible_id: int = 1
-        self.client.force_login(Users.objects.get(pk=accessible_id))
+        self.client.force_login(User.objects.get(pk=accessible_id))
 
         inaccessible_id: int = 2
         for route_name in (UPDATE_USER, DELETE_USER):

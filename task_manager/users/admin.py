@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.db.models.base import Model
 from typing import Union, Sequence, Callable, TypeVar, Any
 
-from .models import Users
+from .models import User
 
 
 _ModelT = TypeVar("_ModelT", bound=Model)
@@ -13,4 +13,4 @@ class UsersAdmin(admin.ModelAdmin):
         ['id', 'username', 'first_name', 'last_name', 'email']
 
 
-admin.site.register(Users, UsersAdmin)
+admin.site.register(User, UsersAdmin)
