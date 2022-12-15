@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-14 22:22+0300\n"
+"POT-Creation-Date: 2022-12-15 16:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,78 +25,82 @@ msgid "You are logged in"
 msgstr "Вы залогинены"
 
 #: task_manager/constants.py:22
-msgid "Logged out successfully"
+msgid "You are logged out"
 msgstr "Вы разлогинены"
 
-#: task_manager/statuses/constants.py:36 task_manager/statuses/constants.py:38
+#: task_manager/constants.py:24
+msgid "You are not authorized! Please sign in."
+msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
+
+#: task_manager/statuses/constants.py:39 task_manager/statuses/constants.py:41
 #: task_manager/templates/components/navbar.html:14
 msgid "Statuses"
 msgstr "Статусы"
 
-#: task_manager/statuses/constants.py:37
+#: task_manager/statuses/constants.py:40
 msgid "List of Task Manager Statuses."
 msgstr "Список всех статусов Менеджера задач."
 
-#: task_manager/statuses/constants.py:40
+#: task_manager/statuses/constants.py:43
 msgid "Status creation"
 msgstr "Создание статуса"
 
-#: task_manager/statuses/constants.py:41
+#: task_manager/statuses/constants.py:44
 msgid "Status Creation on Task Manager."
 msgstr "Создание статуса в Менеджере задач."
 
-#: task_manager/statuses/constants.py:42
+#: task_manager/statuses/constants.py:45
 #: task_manager/statuses/templates/statuses/status_list.html:13
 msgid "Create status"
 msgstr "Создать статус"
 
-#: task_manager/statuses/constants.py:44
+#: task_manager/statuses/constants.py:47
 msgid "Status editing"
 msgstr "Изменение статуса"
 
-#: task_manager/statuses/constants.py:45
+#: task_manager/statuses/constants.py:48
 msgid "Status editing on Task Manager."
 msgstr "Изменение статуса в Менеджере задач."
 
-#: task_manager/statuses/constants.py:46
+#: task_manager/statuses/constants.py:49
 msgid "Change Status"
 msgstr "Обновить статус"
 
-#: task_manager/statuses/constants.py:48
+#: task_manager/statuses/constants.py:51
 msgid "Status deleting"
 msgstr "Удаление статуса"
 
-#: task_manager/statuses/constants.py:49
+#: task_manager/statuses/constants.py:52
 msgid "Status deleting on Task Manager."
 msgstr "Удаление статуса в Менеджере задач."
 
-#: task_manager/statuses/constants.py:50
+#: task_manager/statuses/constants.py:53
 msgid "Delete status"
 msgstr "Удалить статус"
 
-#: task_manager/statuses/constants.py:54
+#: task_manager/statuses/constants.py:57
 msgid "Status created successfully"
 msgstr "Статус успешно создан"
 
-#: task_manager/statuses/constants.py:55
+#: task_manager/statuses/constants.py:58
 msgid "Status changed successfully"
 msgstr "Статус успешно изменён"
 
-#: task_manager/statuses/constants.py:56
+#: task_manager/statuses/constants.py:59
 msgid "Status deleted successfully"
 msgstr "Статус успешно удалён"
 
-#: task_manager/statuses/constants.py:65
+#: task_manager/statuses/constants.py:68
 msgid "Create"
 msgstr "Создать"
 
-#: task_manager/statuses/constants.py:66
+#: task_manager/statuses/constants.py:69
 #: task_manager/statuses/templates/statuses/status_list.html:34
 #: task_manager/users/templates/users/user_list.html:29
 msgid "Update"
 msgstr "Обновить"
 
-#: task_manager/statuses/constants.py:67
+#: task_manager/statuses/constants.py:70
 #: task_manager/statuses/templates/statuses/status_list.html:37
 #: task_manager/users/templates/users/user_list.html:32
 msgid "Delete"

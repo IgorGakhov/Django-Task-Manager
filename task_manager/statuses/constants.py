@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy
 from django.urls import reverse_lazy
 from typing import Dict, Final
 
+from task_manager.constants import REVERSE_LOGIN, NO_PERMISSION_MESSAGE  # noqa: F401
+
 
 # Route names
 LIST_STATUSES: Final[str] = 'statuses'
@@ -14,14 +16,15 @@ DELETE_STATUS: Final[str] = 'status_delete'
 
 # Reverses
 REVERSE_STATUSES: Final = reverse_lazy(LIST_STATUSES)
+REVERSE_CREATE: Final = reverse_lazy(CREATE_STATUS)
 
 
 # Templates
 # All are default!
-TEMPLATE_LIST: Final[str] = 'users/users_list.html'
-TEMPLATE_CREATE: Final[str] = 'users/users_form.html'
-TEMPLATE_UPDATE: Final[str] = 'users/users_form.html'
-TEMPLATE_DELETE: Final[str] = 'users/users_confirm_delete.html'
+TEMPLATE_LIST: Final[str] = 'statuses/status_list.html'
+TEMPLATE_CREATE: Final[str] = 'statuses/status_form.html'
+TEMPLATE_UPDATE: Final[str] = 'statuses/status_form.html'
+TEMPLATE_DELETE: Final[str] = 'statuses/status_confirm_delete.html'
 
 
 # Context Fields

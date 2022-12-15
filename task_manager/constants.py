@@ -19,7 +19,9 @@ REVERSE_LOGOUT: Final = reverse_lazy(LOGOUT)
 
 # Messages
 MSG_LOGIN: str = gettext_lazy('You are logged in')
-MSG_LOGOUT: str = gettext_lazy('Logged out successfully')
+MSG_LOGOUT: str = gettext_lazy('You are logged out')
+
+NO_PERMISSION_MESSAGE = gettext_lazy('You are not authorized! Please sign in.')
 
 
 # Templates
