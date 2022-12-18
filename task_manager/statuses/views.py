@@ -9,7 +9,7 @@ from typing import Dict, Any, Tuple, Union, Callable, Type
 from .models import Status
 from .constants import REVERSE_LOGIN, REVERSE_STATUSES, NAME, \
     CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE, \
-    MSG_CREATED, MSG_UPDATED, MSG_DELETED, NO_PERMISSION_MESSAGE
+    MSG_CREATED, MSG_UPDATED, MSG_DELETED, MSG_NO_PERMISSION
 
 
 class StatusesListView(LoginRequiredMixin, ListView):
@@ -25,7 +25,7 @@ class StatusesListView(LoginRequiredMixin, ListView):
 
     def handle_no_permission(self) -> HttpResponseRedirect:
         '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, NO_PERMISSION_MESSAGE)
+        messages.warning(self.request, MSG_NO_PERMISSION)
         return redirect(REVERSE_LOGIN)
 
 
@@ -44,7 +44,7 @@ class StatusCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     def handle_no_permission(self) -> HttpResponseRedirect:
         '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, NO_PERMISSION_MESSAGE)
+        messages.warning(self.request, MSG_NO_PERMISSION)
         return redirect(REVERSE_LOGIN)
 
 
@@ -63,7 +63,7 @@ class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def handle_no_permission(self) -> HttpResponseRedirect:
         '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, NO_PERMISSION_MESSAGE)
+        messages.warning(self.request, MSG_NO_PERMISSION)
         return redirect(REVERSE_LOGIN)
 
 
@@ -82,5 +82,5 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def handle_no_permission(self) -> HttpResponseRedirect:
         '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, NO_PERMISSION_MESSAGE)
+        messages.warning(self.request, MSG_NO_PERMISSION)
         return redirect(REVERSE_LOGIN)

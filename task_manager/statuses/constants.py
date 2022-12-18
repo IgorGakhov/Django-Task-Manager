@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy
 from django.urls import reverse_lazy
 from typing import Dict, Final
 
-from task_manager.constants import REVERSE_LOGIN, NO_PERMISSION_MESSAGE  # noqa: F401
+from task_manager.constants import REVERSE_LOGIN, MSG_NO_PERMISSION  # noqa: F401
 
 
 # Route names

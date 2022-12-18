@@ -39,6 +39,9 @@ package-install:
 package-force-reinstall:
 	python3 -m pip install --user --force-reinstall dist/*.whl
 
+package-uninstall:
+	python3 -m pip uninstall --yes dist/*.whl
+
 fast-check:
 	echo "\n\n\n ! Build process...\n"
 	make build
@@ -51,6 +54,10 @@ fast-check:
 
 dev-start:
 	poetry run python manage.py runserver
+
+
+# Creation new app example (root dir):
+# cd task_manager && poetry run django-admin startapp {app_name} && cd -
 
 # Database dump example:
 # poetry run ./manage.py dumpdata {app:users}.{db:users} --indent {indent:2} > {path:tests/fixtures}/{name:users}.{format:json}

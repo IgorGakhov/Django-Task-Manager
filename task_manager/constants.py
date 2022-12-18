@@ -21,7 +21,8 @@ REVERSE_LOGOUT: Final = reverse_lazy(LOGOUT)
 MSG_LOGIN: str = gettext_lazy('You are logged in')
 MSG_LOGOUT: str = gettext_lazy('You are logged out')
 
-NO_PERMISSION_MESSAGE = gettext_lazy('You are not authorized! Please sign in.')
+MSG_NO_PERMISSION = gettext_lazy('You are not authorized! Please sign in.')
+MSG_NOT_AUTHOR_FOR_DELETE_TASK = gettext_lazy("A task can only be deleted by its author.")
 
 
 # Templates

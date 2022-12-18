@@ -10,7 +10,7 @@ from typing import Dict, Tuple
 
 from task_manager.users.models import User
 from task_manager.constants import HOME, TEMPLATE_INDEX, \
-    REVERSE_HOME, REVERSE_LOGIN, REVERSE_LOGOUT, NO_PERMISSION_MESSAGE
+    REVERSE_HOME, REVERSE_LOGIN, REVERSE_LOGOUT, MSG_NO_PERMISSION
 from task_manager.users.constants import UPDATE_USER, DELETE_USER
 from task_manager.statuses.constants import \
     LIST_STATUSES, CREATE_STATUS, UPDATE_STATUS, DELETE_STATUS
@@ -83,7 +83,7 @@ class AuthenticationTest(TestCase):
             self.assertRedirects(response, REVERSE_LOGIN)
             self.assertRaisesMessage(
                 expected_exception=PermissionDenied,
-                expected_message=NO_PERMISSION_MESSAGE
+                expected_message=MSG_NO_PERMISSION
             )
 
         # Test for prohibition of changing user information by another user
