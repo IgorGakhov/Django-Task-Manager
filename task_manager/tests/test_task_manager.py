@@ -14,6 +14,8 @@ from task_manager.constants import HOME, TEMPLATE_INDEX, \
 from task_manager.users.constants import UPDATE_USER, DELETE_USER
 from task_manager.statuses.constants import \
     LIST_STATUSES, CREATE_STATUS, UPDATE_STATUS, DELETE_STATUS
+from task_manager.tasks.constants import \
+    LIST_TASKS, CREATE_TASK, UPDATE_TASK, DELETE_TASK, DETAIL_TASK
 
 
 class HomePageTest(TestCase):
@@ -61,38 +63,57 @@ class AuthenticationTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_HOME)
 
-    def test_inaccessibility_of_pages_by_auth(self) -> None:
+
+class PagesAccessibility(TestCase):
+
+    fixtures = ['task.json', 'status.json', 'user.json']
+
+    def setUp(self) -> None:
+        self.unauthenticated_client: Client = Client()
+        self.authenticated_client: Client = Client()
+        self.authenticated_client.force_login(User.objects.get(pk=1))
+
+    def test_unavailability_of_viewing_by_unauthenticated_users(self) -> None:
 
         @dataclass
         class NotAllowedPageRoutes:
-            with_pk: Tuple = (UPDATE_STATUS, DELETE_STATUS)
-            without_pk: Tuple = (LIST_STATUSES, CREATE_STATUS)
-            _all: Tuple = with_pk + without_pk
+            with_pk: Tuple[str] = (
+                UPDATE_STATUS, DELETE_STATUS,
+                UPDATE_TASK, DELETE_TASK, DETAIL_TASK
+            )
+            without_pk: Tuple[str] = (
+                LIST_STATUSES, CREATE_STATUS, LIST_TASKS, CREATE_TASK
+            )
+            _all: Tuple[str] = with_pk + without_pk
 
-        # Test for inaccessibility of pages for an unauthorized user
         for not_allowed_page_route in NotAllowedPageRoutes._all:
             if not_allowed_page_route in NotAllowedPageRoutes.with_pk:
-                response: HttpResponse = self.client.get(
+                response: HttpResponse = self.unauthenticated_client.get(
                     reverse_lazy(not_allowed_page_route, args=[1])
                 )
-            else:
-                response: HttpResponse = self.client.get(
+            elif not_allowed_page_route in NotAllowedPageRoutes.without_pk:
+                response: HttpResponse = self.unauthenticated_client.get(
                     reverse_lazy(not_allowed_page_route)
                 )
-            self.assertEqual(response.status_code, HTTPStatus.FOUND)
-            self.assertRedirects(response, REVERSE_LOGIN)
-            self.assertRaisesMessage(
-                expected_exception=PermissionDenied,
-                expected_message=MSG_NO_PERMISSION
-            )
 
-        # Test for prohibition of changing user information by another user
-        accessible_id: int = 1
-        self.client.force_login(User.objects.get(pk=accessible_id))
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, REVERSE_LOGIN)
+        self.assertRaisesMessage(
+            expected_exception=PermissionDenied,
+            expected_message=MSG_NO_PERMISSION
+        )
 
-        inaccessible_id: int = 2
+    def test_prohibition_of_changing_user_info_by_another_user(self) -> None:
+        inaccessible_id: int = 2  # recall that we are a client with ID 1
         for route in (UPDATE_USER, DELETE_USER):
-            response: HttpResponse = self.client.get(
+            response: HttpResponse = self.authenticated_client.get(
                 reverse_lazy(route, args=[inaccessible_id])
             )
             self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+    def test_unavailability_of_task_deletion_by_non_authors(self) -> None:
+        response: HttpResponse = self.authenticated_client.get(
+            DELETE_TASK, args=[1]
+        )  # the task author must not be the same as the user's client under test
+
+        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)

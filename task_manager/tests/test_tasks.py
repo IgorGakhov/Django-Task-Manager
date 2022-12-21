@@ -1,0 +1,305 @@
+from django.test import TestCase, Client
+from django.urls import reverse_lazy
+from django.http import HttpResponse
+from django.forms.utils import ErrorDict
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+
+from http import HTTPStatus
+from typing import List, Dict
+
+from task_manager.tasks.models import Task
+from task_manager.statuses.models import Status
+from task_manager.users.models import User
+from task_manager.tasks.constants import \
+    TEMPLATE_CREATE, TEMPLATE_LIST, TEMPLATE_UPDATE, TEMPLATE_DELETE, TEMPLATE_DETAIL, \
+    REVERSE_TASKS, REVERSE_CREATE, UPDATE_TASK, DELETE_TASK, DETAIL_TASK, \
+    MSG_NOT_AUTHOR_FOR_DELETE_TASK
+
+
+class TasksTest(TestCase):
+
+    fixtures = ['task.json', 'status.json', 'user.json']
+
+    VALID_DATA: Dict[str, str] = {
+        'name': 'Task name',
+        'status': 1,
+        'description': 'Task description',
+        'executor': 2,
+    }
+
+    def setUp(self) -> None:
+        self.client: Client = Client()
+        self.client.force_login(User.objects.get(pk=1))
+        self.task1: Task = Task.objects.get(pk=1)
+        self.task2: Task = Task.objects.get(pk=2)
+        self.task3: Task = Task.objects.get(pk=3)
+
+        self.user1: User = User.objects.get(pk=1)
+        self.user2: User = User.objects.get(pk=2)
+        self.user3: User = User.objects.get(pk=3)
+
+        self.status1: Status = Status.objects.get(pk=1)
+        self.status2: Status = Status.objects.get(pk=2)
+        self.status3: Status = Status.objects.get(pk=3)
+
+    # DB TESTING
+
+    def assertTask(self, task, task_data) -> None:
+        self.assertEqual(task.__str__(), task_data['name'])
+        self.assertEqual(task.name, task_data['name'])
+        self.assertEqual(task.status, task_data['status'])
+        self.assertEqual(task.description, task_data['description'])
+        self.assertEqual(task.author, task_data['author'])
+        self.assertEqual(task.executor, task_data['executor'])
+        self.assertEqual(task.date_created, task_data['date_created'])
+        self.assertEqual(task.date_modified, task_data['date_modified'])
+
+    def test_task_exists(self) -> None:
+        response: HttpResponse = self.client.get(REVERSE_TASKS)
+
+        tasks_list: List = list(response.context['tasks'])
+        self.assertTrue(len(tasks_list) == 3)
+
+        task1, task2, task3 = tasks_list
+
+        self.assertEqual(task1.name, 'Get Terms of Reference')
+        self.assertEqual(task1.status, self.status3)
+        self.assertEqual(
+            task1.description,
+            'Get cloud disk access from Galya and open the document.'
+        )
+        self.assertEqual(task1.author, self.user1)
+        self.assertEqual(task1.executor, self.user2)
+
+        self.assertEqual(task2.name, 'Implement functionality')
+        self.assertEqual(task2.status, self.status1)
+        self.assertEqual(
+            task2.description,
+            'Write the best and cleanest application code.'
+        )
+        self.assertEqual(task2.author, self.user2)
+        self.assertEqual(task2.executor, self.user3)
+
+        self.assertEqual(task3.name, 'Hand over the work to the customer')
+        self.assertEqual(task3.status, self.status2)
+        self.assertEqual(
+            task3.description,
+            'Upload the archive with the code to the cloud drive and give access to Galya.'
+        )
+        self.assertEqual(task3.author, self.user3)
+        self.assertEqual(task3.executor, self.user2)
+
+    def test_users_model_representation(self) -> None:
+        response: HttpResponse = self.client.get(REVERSE_TASKS)
+
+        tasks_list: List = list(response.context['tasks'])
+
+        task1, task2, task3 = tasks_list
+        self.assertEqual(task1.__str__(), 'Get Terms of Reference')
+        self.assertEqual(task2.__str__(), 'Implement functionality')
+        self.assertEqual(task3.__str__(), 'Hand over the work to the customer')
+
+    # LIST VIEW TESTING
+
+    def test_tasks_list_view(self) -> None:
+        response: HttpResponse = self.client.get(REVERSE_TASKS)
+
+        self.assertTemplateUsed(response, template_name=TEMPLATE_LIST)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_tasks_list_view_has_create_link(self) -> None:
+        response: HttpResponse = self.client.get(REVERSE_TASKS)
+        self.assertContains(response, '/tasks/create/')
+
+    def test_tasks_list_view_has_update_and_delete_links(self) -> None:
+        response: HttpResponse = self.client.get(REVERSE_TASKS)
+        for task_id in range(1, len(response.context['tasks']) + 1):
+            self.assertContains(response, '/tasks/{}/update/'.format(task_id))
+            self.assertContains(response, '/tasks/{}/delete/'.format(task_id))
+
+    # CREATE VIEW TESTING & FORM
+
+    def test_task_create_view(self) -> None:
+        response: HttpResponse = self.client.get(REVERSE_CREATE)
+
+        self.assertTemplateUsed(response, template_name=TEMPLATE_CREATE)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_task_create_post_with_validation_errors(self) -> None:
+        ROUTE = REVERSE_CREATE
+
+        # Task name is required
+        params: Dict[str, str] = TasksTest.VALID_DATA.copy()
+        params.update({'name': ''})
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        errors: ErrorDict = response.context['form'].errors
+        self.assertIn('name', errors)
+        self.assertEqual(
+            ['This field is required.'],
+            errors['name']
+        )
+
+        # Task name too long
+        params: Dict[str, str] = TasksTest.VALID_DATA.copy()
+        params.update({'name': '*' * 51})  # len == 51
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        errors: ErrorDict = response.context['form'].errors
+        self.assertIn('name', errors)
+        self.assertEqual(
+            ['Ensure this value has at most 50 characters ' +
+                '(it has {}).'.format(len(params['name']))],
+            errors['name']
+        )
+
+        # Status is required
+        params: Dict[str, str] = TasksTest.VALID_DATA.copy()
+        params.update({'status': ''})
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        errors: ErrorDict = response.context['form'].errors
+        self.assertIn('status', errors)
+        self.assertEqual(
+            ['This field is required.'],
+            errors['status']
+        )
+
+        # Status does not exist
+        params: Dict[str, str] = TasksTest.VALID_DATA.copy()
+        params.update({'status': 10})
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        errors: ErrorDict = response.context['form'].errors
+        self.assertIn('status', errors)
+        self.assertEqual(
+            ['Select a valid choice. That choice is not one of the available choices.'],
+            errors['status']
+        )
+
+        # Description name is required
+        params: Dict[str, str] = TasksTest.VALID_DATA.copy()
+        params.update({'description': ''})
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        errors: ErrorDict = response.context['form'].errors
+        self.assertIn('description', errors)
+        self.assertEqual(
+            ['This field is required.'],
+            errors['description']
+        )
+
+        # Description too long
+        params: Dict[str, str] = TasksTest.VALID_DATA.copy()
+        params.update({'description': '*' * 5001})  # len == 5001
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        errors: ErrorDict = response.context['form'].errors
+        self.assertIn('description', errors)
+        self.assertEqual(
+            ['Ensure this value has at most 5000 characters ' +
+                '(it has {}).'.format(len(params['description']))],
+            errors['description']
+        )
+
+        # Executor does not exist
+        params: Dict[str, str] = TasksTest.VALID_DATA.copy()
+        params.update({'executor': 10})
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        errors: ErrorDict = response.context['form'].errors
+        self.assertIn('executor', errors)
+        self.assertEqual(
+            ['Select a valid choice. That choice is not one of the available choices.'],
+            errors['executor']
+        )
+
+    def test_task_create(self) -> None:
+        ROUTE = REVERSE_CREATE
+
+        params: Dict[str, str] = TasksTest.VALID_DATA.copy()
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        self.assertTrue(Task.objects.get(id=4))
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, REVERSE_TASKS)
+
+    # UPDATE VIEW TESTING
+
+    def test_task_update_view(self) -> None:
+        ROUTE = reverse_lazy(UPDATE_TASK, args=[1])
+
+        response: HttpResponse = self.client.get(ROUTE)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, template_name=TEMPLATE_UPDATE)
+
+    def test_task_update(self) -> None:
+        ROUTE = reverse_lazy(UPDATE_TASK, args=[1])
+
+        original_objs_count: int = len(Task.objects.all())
+        params: Dict[str, str] = TasksTest.VALID_DATA
+        params.update({'name': 'updated task name'})
+
+        response: HttpResponse = self.client.post(ROUTE, data=params)
+        final_objs_count: int = len(Task.objects.all())
+        self.assertTrue(final_objs_count == original_objs_count)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, REVERSE_TASKS)
+
+        updated_task: Task = Task.objects.get(id=1)
+        self.assertEqual(updated_task.name, params['name'])
+
+    # DELETE VIEW TESTING
+
+    def test_task_delete_view(self) -> None:
+        ROUTE = reverse_lazy(DELETE_TASK, args=[1])
+
+        response: HttpResponse = self.client.get(ROUTE)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, template_name=TEMPLATE_DELETE)
+
+    def test_task_delete(self) -> None:
+        ROUTE = reverse_lazy(DELETE_TASK, args=[1])
+
+        original_objs_count: int = len(Task.objects.all())
+        response: HttpResponse = self.client.post(ROUTE)
+        final_objs_count: int = len(Task.objects.all())
+
+        self.assertTrue(final_objs_count == original_objs_count - 1)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, REVERSE_TASKS)
+        with self.assertRaises(ObjectDoesNotExist):
+            Task.objects.get(id=1)
+
+    def test_not_self_task_delete(self) -> None:
+        ROUTE = reverse_lazy(DELETE_TASK, args=[2])
+        original_objs_count: int = len(Task.objects.all())
+        # GET
+        get_response = self.client.get(ROUTE)
+        final_objs_count: int = len(Task.objects.all())
+        self.assertTrue(final_objs_count == original_objs_count)
+        self.assertRedirects(get_response, REVERSE_TASKS)
+        self.assertEqual(len(Task.objects.all()), 3)
+        self.assertRaisesMessage(
+            expected_exception=PermissionDenied,
+            expected_message=MSG_NOT_AUTHOR_FOR_DELETE_TASK
+        )
+        # POST
+        post_response = self.client.post(ROUTE, follow=True)
+        final_objs_count: int = len(Task.objects.all())
+        self.assertTrue(final_objs_count == original_objs_count)
+        self.assertRedirects(post_response, REVERSE_TASKS)
+        self.assertEqual(len(Task.objects.all()), 3)
+        self.assertRaisesMessage(
+            expected_exception=PermissionDenied,
+            expected_message=MSG_NOT_AUTHOR_FOR_DELETE_TASK
+        )
+
+    # DETAIL VIEW TESTING
+
+    def test_task_detail_view(self) -> None:
+        ROUTE = reverse_lazy(DETAIL_TASK, args=[3])
+
+        response: HttpResponse = self.client.get(ROUTE)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, template_name=TEMPLATE_DETAIL)

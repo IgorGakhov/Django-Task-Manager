@@ -86,7 +86,8 @@ class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         '''Specifies access settings for the current user.
         Provides access if the user is authenticated.'''
         if request.user.id != self.get_object().author.id:
-            messages.error(self.request, MSG_NOT_AUTHOR_FOR_DELETE_TASK)
+            if request.user.is_authenticated:
+                messages.error(self.request, MSG_NOT_AUTHOR_FOR_DELETE_TASK)
             return redirect(REVERSE_TASKS)
         return super().dispatch(request, *args, **kwargs)
 

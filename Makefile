@@ -59,5 +59,5 @@ dev-start:
 # Creation new app example (root dir):
 # cd task_manager && poetry run django-admin startapp {app_name} && cd -
 
-# Database dump example:
-# poetry run ./manage.py dumpdata {app:users}.{db:users} --indent {indent:2} > {path:tests/fixtures}/{name:users}.{format:json}
+# Database dump & load data example:
+# poetry run ./manage.py dumpdata {app:users}.{db:user} --indent {indent:2} > {path:tests/fixtures}/{name:user}.{format:json} && ./manage.py loaddata {name:user}.json

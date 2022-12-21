@@ -27,7 +27,7 @@ TEMPLATE_LIST: Final[str] = 'tasks/task_list.html'
 TEMPLATE_CREATE: Final[str] = 'tasks/task_form.html'
 TEMPLATE_UPDATE: Final[str] = 'tasks/task_form.html'
 TEMPLATE_DELETE: Final[str] = 'tasks/task_confirm_delete.html'
-TEMPLATE_DETAIL: Final[str] = 'tasks/*.html'
+TEMPLATE_DETAIL: Final[str] = 'tasks/task_detail.html'
 
 
 # Context Fields

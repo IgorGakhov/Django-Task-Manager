@@ -31,7 +31,7 @@ class Task(models.Model):
         verbose_name=gettext_lazy('author'), related_name="author_id"
     )
     executor = models.ForeignKey(
-        User, on_delete=models.SET_NULL,
+        User, on_delete=models.PROTECT,
         verbose_name=gettext_lazy('executor'), related_name="executor_id",
         blank=True, null=True
     )
