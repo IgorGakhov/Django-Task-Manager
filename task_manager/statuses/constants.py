@@ -57,6 +57,7 @@ DELETE_H1: str = gettext_lazy('Delete status')
 MSG_CREATED: str = gettext_lazy('Status created successfully')
 MSG_UPDATED: str = gettext_lazy('Status changed successfully')
 MSG_DELETED: str = gettext_lazy('Status deleted successfully')
+STATUS_USED_IN_TASK: str = gettext_lazy('Can\'t delete status because it\'s in use')
 
 
 # Forms

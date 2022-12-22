@@ -72,6 +72,7 @@ NAME: Final[str] = 'name'
 STATUS: Final[str] = 'status'
 DESCRIPTION: Final[str] = 'description'
 EXECUTOR: Final[str] = 'executor'
+LABELS: Final[str] = 'labels'
 
 
 # Buttons

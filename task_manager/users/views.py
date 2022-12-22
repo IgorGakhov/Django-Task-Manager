@@ -4,14 +4,16 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.forms import BaseForm
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse, HttpRequest
+from django.db.models import ProtectedError
 from typing import Dict, Any, Union, Callable, Type
 
 from .models import User
 from .forms import UserRegistrationForm, UserEditingForm
 from .constants import REVERSE_USERS, REVERSE_LOGIN, \
     CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE, \
-    MSG_REGISTERED, MSG_UPDATED, MSG_DELETED, MSG_UNPERMISSION_TO_MODIFY
+    MSG_REGISTERED, MSG_UPDATED, MSG_DELETED, MSG_UNPERMISSION_TO_MODIFY, \
+    USER_USED_IN_TASK
 
 
 class UsersListView(ListView):
@@ -69,6 +71,14 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     context_object_name: str = 'user'
     success_url: Union[str, Callable[..., Any]] = REVERSE_USERS
     success_message: str = MSG_DELETED
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        '''Sends data to the server with protection check.'''
+        try:
+            return super().post(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(self.request, USER_USED_IN_TASK)
+            return redirect(REVERSE_USERS)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         '''Sets additional meta information and a button.'''

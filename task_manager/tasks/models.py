@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy
 
 from task_manager.users.models import User
 from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
 
 
 class Task(models.Model):
@@ -43,6 +44,14 @@ class Task(models.Model):
         verbose_name=gettext_lazy('modified at'),
         auto_now=True
     )
+    labels = models.ManyToManyField(
+        Label,
+        verbose_name=gettext_lazy('labels'),
+        through='TaskLabel', through_fields=('task', 'label'),
+        blank=True, help_text=gettext_lazy(
+            "You can select multiple labels."
+        )
+    )
 
     class Meta:
         verbose_name: str = gettext_lazy('task')
@@ -50,3 +59,8 @@ class Task(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class TaskLabel(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.DO_NOTHING)
+    label = models.ForeignKey(Label, on_delete=models.PROTECT)

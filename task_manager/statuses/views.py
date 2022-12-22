@@ -3,13 +3,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
+from django.db.models import ProtectedError
 from typing import Dict, Any, Tuple, Union, Callable, Type
 
 from .models import Status
 from .constants import REVERSE_LOGIN, REVERSE_STATUSES, NAME, \
     CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE, \
-    MSG_CREATED, MSG_UPDATED, MSG_DELETED, MSG_NO_PERMISSION
+    MSG_CREATED, MSG_UPDATED, MSG_DELETED, MSG_NO_PERMISSION, STATUS_USED_IN_TASK
 
 
 class StatusesListView(LoginRequiredMixin, ListView):
@@ -73,6 +74,14 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     context_object_name: str = 'status'
     success_url: Union[str, Callable[..., Any]] = REVERSE_STATUSES
     success_message: str = MSG_DELETED
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        '''Sends data to the server with protection check.'''
+        try:
+            return super().post(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(self.request, STATUS_USED_IN_TASK)
+            return redirect(REVERSE_STATUSES)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         '''Sets additional meta information and a button.'''

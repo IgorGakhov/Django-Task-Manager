@@ -11,7 +11,7 @@ from .models import Task, User
 from .constants import REVERSE_TASKS, REVERSE_LOGIN, \
     CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE, CONTEXT_DETAIL, \
     MSG_CREATED, MSG_UPDATED, MSG_DELETED, MSG_NO_PERMISSION, \
-    MSG_NOT_AUTHOR_FOR_DELETE_TASK, NAME, STATUS, DESCRIPTION, EXECUTOR
+    MSG_NOT_AUTHOR_FOR_DELETE_TASK, NAME, STATUS, DESCRIPTION, EXECUTOR, LABELS
 
 
 class TasksListView(LoginRequiredMixin, ListView):
@@ -34,7 +34,7 @@ class TasksListView(LoginRequiredMixin, ListView):
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     '''Create a task.'''
     model: Type[Task] = Task
-    fields: Tuple = (NAME, STATUS, DESCRIPTION, EXECUTOR)
+    fields: Tuple = (NAME, STATUS, DESCRIPTION, EXECUTOR, LABELS)
     success_url: Union[str, Callable[..., Any]] = REVERSE_TASKS
     success_message: str = MSG_CREATED
 
@@ -59,7 +59,7 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     '''Change a task.'''
     model: Type[Task] = Task
-    fields: Tuple = (NAME, STATUS, DESCRIPTION, EXECUTOR)
+    fields: Tuple = (NAME, STATUS, DESCRIPTION, EXECUTOR, LABELS)
     success_url: Union[str, Callable[..., Any]] = REVERSE_TASKS
     success_message: str = MSG_UPDATED
 

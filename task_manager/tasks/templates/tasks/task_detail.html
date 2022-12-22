@@ -39,6 +39,17 @@
                 </div>
             {% endif %}
             <div class="row p-2">
+                <div class="col"><h6>{% trans 'Labels' %}:</h6>
+                    <ul>
+                        {% for label in task.labels.all %}
+                            <li>{{ label.name }}</li>
+                            {% empty %}
+                                <div class="font-italic">&#128194; {% translate "No labels" %}</div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="row p-2">
                 <div class="col">{% trans "Description" %}</div>
             </div>
             <div class="border border-secondary rounded w-100 h-50 p-3">{{ task.description|linebreaksbr }}</div>

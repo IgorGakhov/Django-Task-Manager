@@ -57,6 +57,7 @@ DELETE_H1: str = gettext_lazy('Delete label')
 MSG_CREATED: str = gettext_lazy('Label created successfully')
 MSG_UPDATED: str = gettext_lazy('Label changed successfully')
 MSG_DELETED: str = gettext_lazy('Label deleted successfully')
+LABEL_USED_IN_TASK: str = gettext_lazy('Can\'t delete label because it\'s in use')
 
 
 # Forms

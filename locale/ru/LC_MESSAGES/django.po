@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 22:33+0300\n"
+"POT-Creation-Date: 2022-12-23 00:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,6 +37,7 @@ msgid "A task can only be deleted by its author."
 msgstr "Задачу может удалить только её автор."
 
 #: task_manager/labels/constants.py:39 task_manager/labels/constants.py:41
+#: task_manager/tasks/templates/tasks/task_detail.html:42
 #: task_manager/templates/components/navbar.html:17
 msgid "Labels"
 msgstr "Метки"
@@ -94,45 +95,49 @@ msgstr "Метка успешно изменена"
 msgid "Label deleted successfully"
 msgstr "Метка успешно удалена"
 
-#: task_manager/labels/constants.py:68 task_manager/statuses/constants.py:68
-#: task_manager/tasks/constants.py:78
+#: task_manager/labels/constants.py:60
+msgid "Can't delete label because it's in use"
+msgstr "Невозможно удалить метку, потому что она используется"
+
+#: task_manager/labels/constants.py:69 task_manager/statuses/constants.py:69
+#: task_manager/tasks/constants.py:79
 msgid "Create"
 msgstr "Создать"
 
-#: task_manager/labels/constants.py:69
+#: task_manager/labels/constants.py:70
 #: task_manager/labels/templates/labels/label_list.html:34
-#: task_manager/statuses/constants.py:69
+#: task_manager/statuses/constants.py:70
 #: task_manager/statuses/templates/statuses/status_list.html:34
-#: task_manager/tasks/constants.py:79
-#: task_manager/tasks/templates/tasks/task_detail.html:49
+#: task_manager/tasks/constants.py:80
+#: task_manager/tasks/templates/tasks/task_detail.html:60
 #: task_manager/tasks/templates/tasks/task_list.html:38
 #: task_manager/users/templates/users/user_list.html:29
 msgid "Update"
 msgstr "Обновить"
 
-#: task_manager/labels/constants.py:70
+#: task_manager/labels/constants.py:71
 #: task_manager/labels/templates/labels/label_list.html:37
-#: task_manager/statuses/constants.py:70
+#: task_manager/statuses/constants.py:71
 #: task_manager/statuses/templates/statuses/status_list.html:37
-#: task_manager/tasks/constants.py:80
-#: task_manager/tasks/templates/tasks/task_detail.html:56
+#: task_manager/tasks/constants.py:81
+#: task_manager/tasks/templates/tasks/task_detail.html:67
 #: task_manager/tasks/templates/tasks/task_list.html:45
 #: task_manager/users/templates/users/user_list.html:32
 msgid "Delete"
 msgstr "Удалить"
 
 #: task_manager/labels/models.py:7 task_manager/statuses/models.py:7
-#: task_manager/tasks/models.py:10
+#: task_manager/tasks/models.py:11
 msgid "name"
 msgstr "название"
 
 #: task_manager/labels/models.py:11 task_manager/statuses/models.py:11
-#: task_manager/tasks/models.py:39
+#: task_manager/tasks/models.py:40
 msgid "created at"
 msgstr "Дата создания"
 
 #: task_manager/labels/models.py:15 task_manager/statuses/models.py:15
-#: task_manager/tasks/models.py:43
+#: task_manager/tasks/models.py:44
 msgid "modified at"
 msgstr "дата изменения"
 
@@ -241,7 +246,11 @@ msgstr "Статус успешно изменён"
 msgid "Status deleted successfully"
 msgstr "Статус успешно удалён"
 
-#: task_manager/statuses/models.py:20 task_manager/tasks/models.py:23
+#: task_manager/statuses/constants.py:60
+msgid "Can't delete status because it's in use"
+msgstr "Невозможно удалить статус, потому что он используется"
+
+#: task_manager/statuses/models.py:20 task_manager/tasks/models.py:24
 msgid "status"
 msgstr "статус"
 
@@ -319,31 +328,39 @@ msgstr "Задача успешно изменена"
 msgid "Task deleted successfully"
 msgstr "Задача успешно удалена"
 
-#: task_manager/tasks/models.py:13
+#: task_manager/tasks/models.py:14
 msgid "Required. 50 characters or fewer."
 msgstr "Обязательно. Не более 50 символов."
 
-#: task_manager/tasks/models.py:17
+#: task_manager/tasks/models.py:18
 msgid "The task name is required."
 msgstr "Название задачи обязательно."
 
-#: task_manager/tasks/models.py:26
+#: task_manager/tasks/models.py:27
 msgid "description"
 msgstr "описание"
 
-#: task_manager/tasks/models.py:31
+#: task_manager/tasks/models.py:32
 msgid "author"
 msgstr "автор"
 
-#: task_manager/tasks/models.py:35
+#: task_manager/tasks/models.py:36
 msgid "executor"
 msgstr "исполнитель"
 
-#: task_manager/tasks/models.py:48
+#: task_manager/tasks/models.py:49
+msgid "labels"
+msgstr "метки"
+
+#: task_manager/tasks/models.py:52
+msgid "You can select multiple labels."
+msgstr "Вы можете выбрать несколько меток"
+
+#: task_manager/tasks/models.py:57
 msgid "task"
 msgstr "задача"
 
-#: task_manager/tasks/models.py:49
+#: task_manager/tasks/models.py:58
 msgid "tasks"
 msgstr "задачи"
 
@@ -374,7 +391,11 @@ msgstr "Статус"
 msgid "Created at"
 msgstr "Дата создания"
 
-#: task_manager/tasks/templates/tasks/task_detail.html:42
+#: task_manager/tasks/templates/tasks/task_detail.html:47
+msgid "No labels"
+msgstr "Нет меток"
+
+#: task_manager/tasks/templates/tasks/task_detail.html:53
 msgid "Description"
 msgstr "Описание"
 
@@ -489,31 +510,35 @@ msgstr "Пользователь успешно удалён"
 msgid "You do not have permission to modify another user"
 msgstr "У вас нет прав для изменения другого пользователя"
 
-#: task_manager/users/constants.py:73
+#: task_manager/users/constants.py:62
+msgid "Cannot delete user because it is in use"
+msgstr "Невозможно удалить пользователя, потому что он используется"
+
+#: task_manager/users/constants.py:74
 msgid "First Name"
 msgstr "Имя"
 
-#: task_manager/users/constants.py:74
+#: task_manager/users/constants.py:75
 msgid "Last Name"
 msgstr "Фамилия"
 
-#: task_manager/users/constants.py:76
+#: task_manager/users/constants.py:77
 msgid "Required. Please enter your real name."
 msgstr "Пожалуйста, введите настоящее имя."
 
-#: task_manager/users/constants.py:77
+#: task_manager/users/constants.py:78
 msgid "Required. Please enter your real surname."
 msgstr "Пожалуйста, введите настоящую фамилию."
 
-#: task_manager/users/constants.py:81
+#: task_manager/users/constants.py:82
 msgid "Register"
 msgstr "Зарегистрироваться"
 
-#: task_manager/users/constants.py:82
+#: task_manager/users/constants.py:83
 msgid "Change"
 msgstr "Обновить"
 
-#: task_manager/users/constants.py:83
+#: task_manager/users/constants.py:84
 msgid "Yes, delete"
 msgstr "Да, удалить"
 
