@@ -130,12 +130,12 @@ class StatusesTest(TestCase):
     def test_status_update(self) -> None:
         ROUTE = reverse_lazy(UPDATE_STATUS, args=[1])
 
-        original_objs_count: int = len(User.objects.all())
+        original_objs_count: int = len(Status.objects.all())
         params: Dict[str, str] = StatusesTest.VALID_DATA
         params.update({'name': 'updated status name'})
 
         response: HttpResponse = self.client.post(ROUTE, data=params)
-        final_objs_count: int = len(User.objects.all())
+        final_objs_count: int = len(Status.objects.all())
         self.assertTrue(final_objs_count == original_objs_count)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_STATUSES)

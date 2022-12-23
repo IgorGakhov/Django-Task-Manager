@@ -14,6 +14,8 @@ from task_manager.constants import HOME, TEMPLATE_INDEX, \
 from task_manager.users.constants import UPDATE_USER, DELETE_USER
 from task_manager.statuses.constants import \
     LIST_STATUSES, CREATE_STATUS, UPDATE_STATUS, DELETE_STATUS
+from task_manager.labels.constants import \
+    LIST_LABELS, CREATE_LABEL, UPDATE_LABEL, DELETE_LABEL
 from task_manager.tasks.constants import \
     LIST_TASKS, CREATE_TASK, UPDATE_TASK, DELETE_TASK, DETAIL_TASK
 
@@ -79,10 +81,13 @@ class PagesAccessibility(TestCase):
         class NotAllowedPageRoutes:
             with_pk: Tuple[str] = (
                 UPDATE_STATUS, DELETE_STATUS,
-                UPDATE_TASK, DELETE_TASK, DETAIL_TASK
+                UPDATE_TASK, DELETE_TASK, DETAIL_TASK,
+                UPDATE_LABEL, DELETE_LABEL
             )
             without_pk: Tuple[str] = (
-                LIST_STATUSES, CREATE_STATUS, LIST_TASKS, CREATE_TASK
+                LIST_STATUSES, CREATE_STATUS,
+                LIST_TASKS, CREATE_TASK,
+                LIST_LABELS, CREATE_LABEL
             )
             _all: Tuple[str] = with_pk + without_pk
 

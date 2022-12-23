@@ -21,10 +21,10 @@ REVERSE_CREATE: Final = reverse_lazy(CREATE_LABEL)
 
 # Templates
 # All are default!
-TEMPLATE_LIST: Final[str] = 'labels/labels_list.html'
-TEMPLATE_CREATE: Final[str] = 'labels/labels_form.html'
-TEMPLATE_UPDATE: Final[str] = 'labels/labels_form.html'
-TEMPLATE_DELETE: Final[str] = 'labels/labels_confirm_delete.html'
+TEMPLATE_LIST: Final[str] = 'labels/label_list.html'
+TEMPLATE_CREATE: Final[str] = 'labels/label_form.html'
+TEMPLATE_UPDATE: Final[str] = 'labels/label_form.html'
+TEMPLATE_DELETE: Final[str] = 'labels/label_confirm_delete.html'
 
 
 # Context Fields
