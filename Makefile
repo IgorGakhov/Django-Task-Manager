@@ -60,4 +60,4 @@ dev-start:
 # cd task_manager && poetry run django-admin startapp {app_name} && cd -
 
 # Database dump & load data example:
-# poetry run ./manage.py dumpdata {app:users}.{db:user} --indent {indent:2} > {path:./tests/fixtures}/{name:user}.{format:json} && poetry run ./manage.py loaddata {name:user}.json
+# poetry run ./manage.py dumpdata {app:users}.{db:user} --indent {indent:2} > {path:./task_manager/tests/fixtures}/{name:user}.{format:json} && poetry run ./manage.py loaddata {name:user}.json

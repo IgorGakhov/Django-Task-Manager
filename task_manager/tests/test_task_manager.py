@@ -68,7 +68,7 @@ class AuthenticationTest(TestCase):
 
 class PagesAccessibility(TestCase):
 
-    fixtures = ['task.json', 'status.json', 'user.json']
+    fixtures = ['task.json', 'label.json', 'status.json', 'user.json']
 
     def setUp(self) -> None:
         self.unauthenticated_client: Client = Client()
