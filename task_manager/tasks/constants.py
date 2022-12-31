@@ -23,7 +23,7 @@ REVERSE_CREATE: Final = reverse_lazy(CREATE_TASK)
 
 # Templates
 # All are default!
-TEMPLATE_LIST: Final[str] = 'tasks/task_list.html'
+TEMPLATE_LIST: Final[str] = 'tasks/task_filter.html'
 TEMPLATE_CREATE: Final[str] = 'tasks/task_form.html'
 TEMPLATE_UPDATE: Final[str] = 'tasks/task_form.html'
 TEMPLATE_DELETE: Final[str] = 'tasks/task_confirm_delete.html'
@@ -79,13 +79,15 @@ LABELS: Final[str] = 'labels'
 CREATION_BUTTON: str = gettext_lazy('Create')
 UPDATE_BUTTON: str = gettext_lazy('Update')
 DELETE_BUTTON: str = gettext_lazy('Delete')
+FILTER_BUTTON: str = gettext_lazy('Search')
 
 
 # Contexts
 CONTEXT_LIST: Dict = {
     PAGE_TITLE: LIST_TITLE,
     PAGE_DESCRIPTION: LIST_DESCRIPTION,
-    PAGE_H1: LIST_H1
+    PAGE_H1: LIST_H1,
+    BUTTON_TEXT: FILTER_BUTTON
 }
 CONTEXT_CREATE: Dict = {
     PAGE_TITLE: CREATE_TITLE,

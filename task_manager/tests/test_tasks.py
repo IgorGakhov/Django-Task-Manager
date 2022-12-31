@@ -107,7 +107,7 @@ class TasksTest(TestCase):
         self.assertEqual(task2.__str__(), 'Implement functionality')
         self.assertEqual(task3.__str__(), 'Hand over the work to the customer')
 
-    # LIST VIEW TESTING
+    # LIST VIEW TESTING & TASKS FILTERING
 
     def test_tasks_list_view(self) -> None:
         response: HttpResponse = self.client.get(REVERSE_TASKS)
@@ -124,6 +124,43 @@ class TasksTest(TestCase):
         for task_id in range(1, len(response.context['tasks']) + 1):
             self.assertContains(response, '/tasks/{}/update/'.format(task_id))
             self.assertContains(response, '/tasks/{}/delete/'.format(task_id))
+
+    def test_filter_tasks_by_status(self) -> None:
+        # Отфильтровать задачи со статусом "New"
+        response: HttpResponse = self.client.get(REVERSE_TASKS, {'status': self.status1.pk})
+        tasks = response.context['tasks']
+        self.assertEqual(tasks.count(), 2)
+        self.assertIn(self.task2, tasks)
+        self.assertIn(self.task3, tasks)
+        self.assertNotIn(self.task1, tasks)
+
+    def test_filter_tasks_by_executor(self) -> None:
+        # Отфильтровать задачи, выполняемые пользователем 2
+        response: HttpResponse = self.client.get(REVERSE_TASKS, {'executor': self.user2.pk})
+        tasks = response.context['tasks']
+        self.assertEqual(tasks.count(), 2)
+        self.assertIn(self.task1, tasks)
+        self.assertIn(self.task2, tasks)
+        self.assertNotIn(self.task3, tasks)
+
+    def test_filter_tasks_by_labels(self) -> None:
+        # Отфильтровать задачи с меткой "Development"
+        label = Label.objects.get(name='Development')
+        response: HttpResponse = self.client.get(REVERSE_TASKS, {'labels': label.pk})
+        tasks = response.context['tasks']
+        self.assertEqual(tasks.count(), 2)
+        self.assertIn(self.task1, tasks)
+        self.assertIn(self.task2, tasks)
+        self.assertNotIn(self.task3, tasks)
+
+    def test_filter_tasks_by_current_user(self) -> None:
+        # Отфильтровать задачи текущего пользователя (определен в "setUp")
+        response: HttpResponse = self.client.get(REVERSE_TASKS, {'self_tasks': 'on'})
+        tasks = response.context['tasks']
+        self.assertEqual(tasks.count(), 2)
+        self.assertIn(self.task1, tasks)
+        self.assertIn(self.task2, tasks)
+        self.assertNotIn(self.task3, tasks)
 
     # CREATE VIEW TESTING & FORM
 
@@ -284,7 +321,7 @@ class TasksTest(TestCase):
         ROUTE = reverse_lazy(DELETE_TASK, args=[3])
         original_objs_count: int = len(Task.objects.all())
         # GET
-        get_response = self.client.get(ROUTE)
+        get_response: HttpResponse = self.client.get(ROUTE)
         final_objs_count: int = len(Task.objects.all())
         self.assertTrue(final_objs_count == original_objs_count)
         self.assertRedirects(get_response, REVERSE_TASKS)
@@ -294,7 +331,7 @@ class TasksTest(TestCase):
             expected_message=MSG_NOT_AUTHOR_FOR_DELETE_TASK
         )
         # POST
-        post_response = self.client.post(ROUTE, follow=True)
+        post_response: HttpResponse = self.client.post(ROUTE, follow=True)
         final_objs_count: int = len(Task.objects.all())
         self.assertTrue(final_objs_count == original_objs_count)
         self.assertRedirects(post_response, REVERSE_TASKS)
@@ -341,7 +378,7 @@ class TestDeleteRelatedEntities(TestCase):
 
     def test_delete_status(self):
         # отправляем запрос на удаление связанного с задачей статуса
-        response = self.client.post(
+        response: HttpResponse = self.client.post(
             reverse_lazy(DELETE_STATUS, args=[self.status1.id]), follow=True
         )
         self.assertEqual(Status.objects.count(), 3)
@@ -355,7 +392,7 @@ class TestDeleteRelatedEntities(TestCase):
 
     def test_delete_unused_status(self):
         # отправляем запрос на удаление не связанного с задачей статуса
-        response = self.client.post(
+        response: HttpResponse = self.client.post(
             reverse_lazy(DELETE_STATUS, args=[self.status2.id]), follow=True
         )
         self.assertEqual(Status.objects.count(), 2)
@@ -365,7 +402,7 @@ class TestDeleteRelatedEntities(TestCase):
 
     def test_delete_author(self):
         # отправляем запрос на удаление автора задачи
-        response = self.client.post(
+        response: HttpResponse = self.client.post(
             reverse_lazy(DELETE_USER, args=[self.user1.id]), follow=True
         )
         self.assertEqual(User.objects.count(), 3)
@@ -380,7 +417,7 @@ class TestDeleteRelatedEntities(TestCase):
     def test_delete_unused_author(self):
         # отправляем запрос на удаление пользователя задачи без авторских прав
         self.client.force_login(self.user3)
-        response = self.client.post(
+        response: HttpResponse = self.client.post(
             reverse_lazy(DELETE_USER, args=[self.user3.id]), follow=True
         )
         self.assertEqual(User.objects.count(), 2)
@@ -390,7 +427,7 @@ class TestDeleteRelatedEntities(TestCase):
 
     def test_delete_executor(self):
         # отправляем запрос на удаление исполнителя задачи
-        response = self.client.post(
+        response: HttpResponse = self.client.post(
             reverse_lazy(DELETE_USER, args=[self.user1.id]), follow=True
         )
         self.assertEqual(User.objects.count(), 3)
@@ -405,7 +442,7 @@ class TestDeleteRelatedEntities(TestCase):
     def test_delete_unused_executor(self):
         # отправляем запрос на удаление пользователя без исполнительных обязанностей
         self.client.force_login(self.user3)
-        response = self.client.post(
+        response: HttpResponse = self.client.post(
             reverse_lazy(DELETE_USER, args=[self.user3.id]), follow=True
         )
         self.assertEqual(User.objects.count(), 2)
@@ -415,7 +452,7 @@ class TestDeleteRelatedEntities(TestCase):
 
     def test_delete_label(self):
         # отправляем запрос на удаление связанной с задачей метки
-        response = self.client.post(
+        response: HttpResponse = self.client.post(
             reverse_lazy(DELETE_LABEL, args=[self.label1.id]), follow=True
         )
         self.assertEqual(Label.objects.count(), 3)
@@ -429,7 +466,7 @@ class TestDeleteRelatedEntities(TestCase):
 
     def test_delete_unused_label(self):
         # отправляем запрос на удаление не связанной с задачей метки
-        response = self.client.post(
+        response: HttpResponse = self.client.post(
             reverse_lazy(DELETE_LABEL, args=[self.label2.id]), follow=True
         )
         self.assertEqual(Label.objects.count(), 2)

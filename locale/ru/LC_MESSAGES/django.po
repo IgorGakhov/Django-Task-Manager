@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-23 00:48+0300\n"
+"POT-Creation-Date: 2022-12-31 21:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,7 +110,7 @@ msgstr "Создать"
 #: task_manager/statuses/templates/statuses/status_list.html:34
 #: task_manager/tasks/constants.py:80
 #: task_manager/tasks/templates/tasks/task_detail.html:60
-#: task_manager/tasks/templates/tasks/task_list.html:38
+#: task_manager/tasks/templates/tasks/task_filter.html:48
 #: task_manager/users/templates/users/user_list.html:29
 msgid "Update"
 msgstr "Обновить"
@@ -121,7 +121,7 @@ msgstr "Обновить"
 #: task_manager/statuses/templates/statuses/status_list.html:37
 #: task_manager/tasks/constants.py:81
 #: task_manager/tasks/templates/tasks/task_detail.html:67
-#: task_manager/tasks/templates/tasks/task_list.html:45
+#: task_manager/tasks/templates/tasks/task_filter.html:55
 #: task_manager/users/templates/users/user_list.html:32
 msgid "Delete"
 msgstr "Удалить"
@@ -149,8 +149,8 @@ msgstr "дата изменения"
 #: task_manager/statuses/templates/statuses/status_list.html:6
 #: task_manager/tasks/templates/tasks/task_confirm_delete.html:6
 #: task_manager/tasks/templates/tasks/task_detail.html:6
+#: task_manager/tasks/templates/tasks/task_filter.html:6
 #: task_manager/tasks/templates/tasks/task_form.html:6
-#: task_manager/tasks/templates/tasks/task_list.html:6
 #: task_manager/templates/index.html:6
 #: task_manager/templates/registration/login.html:6
 #: task_manager/users/templates/users/user_confirm_delete.html:6
@@ -184,7 +184,7 @@ msgstr "Дата регистрации"
 #: task_manager/labels/templates/labels/label_list.html:21
 #: task_manager/statuses/templates/statuses/status_list.html:21
 #: task_manager/tasks/templates/tasks/task_detail.html:37
-#: task_manager/tasks/templates/tasks/task_list.html:23
+#: task_manager/tasks/templates/tasks/task_filter.html:33
 msgid "Modified at"
 msgstr "Изменён"
 
@@ -280,7 +280,7 @@ msgid "Task Creation on Task Manager."
 msgstr "Создание задачи в Менеджере задач."
 
 #: task_manager/tasks/constants.py:48
-#: task_manager/tasks/templates/tasks/task_list.html:13
+#: task_manager/tasks/templates/tasks/task_filter.html:22
 msgid "Create task"
 msgstr "Создать задачу"
 
@@ -328,6 +328,18 @@ msgstr "Задача успешно изменена"
 msgid "Task deleted successfully"
 msgstr "Задача успешно удалена"
 
+#: task_manager/tasks/constants.py:82
+msgid "Search"
+msgstr "Показать"
+
+#: task_manager/tasks/filters.py:15
+msgid "Label"
+msgstr "Метка"
+
+#: task_manager/tasks/filters.py:17
+msgid "Current user tasks"
+msgstr "Только свои задачи"
+
 #: task_manager/tasks/models.py:14
 msgid "Required. 50 characters or fewer."
 msgstr "Обязательно. Не более 50 символов."
@@ -373,17 +385,17 @@ msgid "TASK ID"
 msgstr "ID задачи"
 
 #: task_manager/tasks/templates/tasks/task_detail.html:20
-#: task_manager/tasks/templates/tasks/task_list.html:21
+#: task_manager/tasks/templates/tasks/task_filter.html:31
 msgid "Author"
 msgstr "Автор"
 
 #: task_manager/tasks/templates/tasks/task_detail.html:24
-#: task_manager/tasks/templates/tasks/task_list.html:22
+#: task_manager/tasks/templates/tasks/task_filter.html:32
 msgid "Executor"
 msgstr "Исполнитель"
 
 #: task_manager/tasks/templates/tasks/task_detail.html:28
-#: task_manager/tasks/templates/tasks/task_list.html:20
+#: task_manager/tasks/templates/tasks/task_filter.html:30
 msgid "Status"
 msgstr "Статус"
 
@@ -399,9 +411,13 @@ msgstr "Нет меток"
 msgid "Description"
 msgstr "Описание"
 
-#: task_manager/tasks/templates/tasks/task_list.html:19
+#: task_manager/tasks/templates/tasks/task_filter.html:29
 msgid "Task name"
 msgstr "Название задачи"
+
+#: task_manager/tasks/templates/tasks/task_filter.html:62
+msgid "No tasks"
+msgstr "Нет релевантных задач"
 
 #: task_manager/templates/components/footer.html:7
 msgid "Source"

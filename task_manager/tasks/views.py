@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -7,6 +7,9 @@ from django.forms.forms import BaseForm
 from django.http import HttpResponse, HttpResponseRedirect
 from typing import Dict, Any, Tuple, Union, Callable, Type
 
+from django_filters.views import FilterView
+
+from .filters import TasksFilter
 from .models import Task, User
 from .constants import REVERSE_TASKS, REVERSE_LOGIN, \
     CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE, CONTEXT_DETAIL, \
@@ -14,10 +17,11 @@ from .constants import REVERSE_TASKS, REVERSE_LOGIN, \
     MSG_NOT_AUTHOR_FOR_DELETE_TASK, NAME, STATUS, DESCRIPTION, EXECUTOR, LABELS
 
 
-class TasksListView(LoginRequiredMixin, ListView):
+class TasksListView(LoginRequiredMixin, FilterView):
     '''Show the list of tasks.'''
     model: Type[Task] = Task
     context_object_name: str = 'tasks'
+    filterset_class = TasksFilter
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         '''Sets additional meta information.'''

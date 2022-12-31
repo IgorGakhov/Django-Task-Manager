@@ -1,29 +1,39 @@
 {% extends "components/base.html" %}
 
-{% load i18n %}
+{% load i18n %}{% load bootstrap4 %}
 
 {% block description %}{{ page_description }}{% endblock %}
 {% block title %}{{ page_title }} | {% translate "Task Manager" %}{% endblock %}
 
 {% block content %}
 <h1 class="my-4">{{ page_h1 }}</h1>
+<div class="card mb-3">
+    <div class="card-body bg-light">
+        <form class="form-inline center my-auto" method="get">
+            {% bootstrap_form filter.form form_group_class="form-group" field_class="ml-2 mr-3" %}
+            <div><br><br></div>
+            <button class="btn btn-primary">{{ button_text }}</button>
+        </form>
+    </div>
+</div>
 <table class="table">
     <div class="container">
         <div class="row mb-4">
             <a class="btn btn-outline-primary btn-sm" href="{% url 'task_create' %}">{% translate "Create task" %}</a>
         </div>
     </div>
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">{% translate "Task name" %}</th>
-            <th scope="col">{% translate "Status" %}</th>
-            <th scope="col">{% translate "Author" %}</th>
-            <th scope="col">{% translate "Executor" %}</th>
-            <th scope="col">{% translate "Modified at" %}</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
+    {% if tasks %}
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">{% translate "Task name" %}</th>
+                <th scope="col">{% translate "Status" %}</th>
+                <th scope="col">{% translate "Author" %}</th>
+                <th scope="col">{% translate "Executor" %}</th>
+                <th scope="col">{% translate "Modified at" %}</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
     <tbody>
         {% for task in tasks %}
             <tr>
@@ -48,5 +58,8 @@
             </tr>
         {% endfor %}
     </tbody>
+    {% else %}
+        <div class="card-body">{% translate "No tasks" %}</div>
+    {% endif %}
 </table>
 {% endblock %}
