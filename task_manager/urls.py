@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, URLPattern
 from typing import List
 
-from .views import HomePageView, UserLoginView, UserLogoutView
+from .views import HomePageView, UserLoginView, UserLogoutView, test_rollbar
 from .constants import HOME, LOGIN, LOGOUT
 
 
@@ -37,4 +37,7 @@ urlpatterns: List[URLPattern] = [
     path('statuses/', include('task_manager.statuses.urls')),
     path('tasks/', include('task_manager.tasks.urls')),
     path('labels/', include('task_manager.labels.urls')),
+
+    # Test:
+    path('test-rollbar/', test_rollbar),
 ]

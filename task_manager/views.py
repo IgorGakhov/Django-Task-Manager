@@ -20,3 +20,12 @@ class UserLogoutView(SuccessMessageMixin, LogoutView):
     '''Log out from Task Manager.'''
     next_page: str = HOME
     success_message: str = MSG_LOGOUT
+
+
+from django.http import HttpResponse
+
+
+def test_rollbar(request):
+    a = None
+    a.hello() # Creating an error with an invalid line of code
+    return HttpResponse("Hello, world. You're at the pollapp index.")
