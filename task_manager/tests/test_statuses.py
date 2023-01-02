@@ -121,14 +121,14 @@ class StatusesTest(TestCase):
     # UPDATE VIEW TESTING
 
     def test_status_update_view(self) -> None:
-        ROUTE = reverse_lazy(UPDATE_STATUS, args=[1])
+        ROUTE = reverse_lazy(UPDATE_STATUS, args=[self.status1.id])
 
         response: HttpResponse = self.client.get(ROUTE)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, template_name=TEMPLATE_UPDATE)
 
     def test_status_update(self) -> None:
-        ROUTE = reverse_lazy(UPDATE_STATUS, args=[1])
+        ROUTE = reverse_lazy(UPDATE_STATUS, args=[self.status1.id])
 
         original_objs_count: int = len(Status.objects.all())
         params: Dict[str, str] = StatusesTest.VALID_DATA
@@ -140,20 +140,20 @@ class StatusesTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_STATUSES)
 
-        updated_status: Status = Status.objects.get(id=1)
+        updated_status: Status = Status.objects.get(id=self.status1.id)
         self.assertEqual(updated_status.name, params['name'])
 
     # DELETE VIEW TESTING
 
     def test_status_delete_view(self) -> None:
-        ROUTE = reverse_lazy(DELETE_STATUS, args=[1])
+        ROUTE = reverse_lazy(DELETE_STATUS, args=[self.status1.id])
 
         response: HttpResponse = self.client.get(ROUTE)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, template_name=TEMPLATE_DELETE)
 
     def test_status_delete(self) -> None:
-        ROUTE = reverse_lazy(DELETE_STATUS, args=[1])
+        ROUTE = reverse_lazy(DELETE_STATUS, args=[self.status1.id])
 
         original_objs_count: int = len(Status.objects.all())
 
@@ -163,4 +163,4 @@ class StatusesTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_STATUSES)
         with self.assertRaises(ObjectDoesNotExist):
-            Status.objects.get(id=1)
+            Status.objects.get(id=self.status1.id)

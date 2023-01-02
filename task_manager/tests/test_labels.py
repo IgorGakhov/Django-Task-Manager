@@ -121,14 +121,14 @@ class LabelsTest(TestCase):
     # UPDATE VIEW TESTING
 
     def test_label_update_view(self) -> None:
-        ROUTE = reverse_lazy(UPDATE_LABEL, args=[1])
+        ROUTE = reverse_lazy(UPDATE_LABEL, args=[self.label1.id])
 
         response: HttpResponse = self.client.get(ROUTE)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, template_name=TEMPLATE_UPDATE)
 
     def test_label_update(self) -> None:
-        ROUTE = reverse_lazy(UPDATE_LABEL, args=[1])
+        ROUTE = reverse_lazy(UPDATE_LABEL, args=[self.label1.id])
 
         original_objs_count: int = len(Label.objects.all())
         params: Dict[str, str] = LabelsTest.VALID_DATA
@@ -140,20 +140,20 @@ class LabelsTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_LABELS)
 
-        updated_label: Label = Label.objects.get(id=1)
+        updated_label: Label = Label.objects.get(id=self.label1.id)
         self.assertEqual(updated_label.name, params['name'])
 
     # DELETE VIEW TESTING
 
     def test_label_delete_view(self) -> None:
-        ROUTE = reverse_lazy(DELETE_LABEL, args=[1])
+        ROUTE = reverse_lazy(DELETE_LABEL, args=[self.label1.id])
 
         response: HttpResponse = self.client.get(ROUTE)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, template_name=TEMPLATE_DELETE)
 
     def test_label_delete(self) -> None:
-        ROUTE = reverse_lazy(DELETE_LABEL, args=[1])
+        ROUTE = reverse_lazy(DELETE_LABEL, args=[self.label1.id])
 
         original_objs_count: int = len(Label.objects.all())
 
@@ -163,4 +163,4 @@ class LabelsTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_LABELS)
         with self.assertRaises(ObjectDoesNotExist):
-            Label.objects.get(id=1)
+            Label.objects.get(id=self.label1.id)

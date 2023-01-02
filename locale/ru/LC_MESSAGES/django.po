@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-31 21:05+0300\n"
+"POT-Creation-Date: 2023-01-02 13:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,24 +105,24 @@ msgid "Create"
 msgstr "Создать"
 
 #: task_manager/labels/constants.py:70
-#: task_manager/labels/templates/labels/label_list.html:34
+#: task_manager/labels/templates/labels/label_list.html:35
 #: task_manager/statuses/constants.py:70
-#: task_manager/statuses/templates/statuses/status_list.html:34
+#: task_manager/statuses/templates/statuses/status_list.html:35
 #: task_manager/tasks/constants.py:80
 #: task_manager/tasks/templates/tasks/task_detail.html:60
 #: task_manager/tasks/templates/tasks/task_filter.html:48
-#: task_manager/users/templates/users/user_list.html:29
+#: task_manager/users/templates/users/user_list.html:30
 msgid "Update"
 msgstr "Обновить"
 
 #: task_manager/labels/constants.py:71
-#: task_manager/labels/templates/labels/label_list.html:37
+#: task_manager/labels/templates/labels/label_list.html:38
 #: task_manager/statuses/constants.py:71
-#: task_manager/statuses/templates/statuses/status_list.html:37
+#: task_manager/statuses/templates/statuses/status_list.html:38
 #: task_manager/tasks/constants.py:81
 #: task_manager/tasks/templates/tasks/task_detail.html:67
 #: task_manager/tasks/templates/tasks/task_filter.html:55
-#: task_manager/users/templates/users/user_list.html:32
+#: task_manager/users/templates/users/user_list.html:33
 msgid "Delete"
 msgstr "Удалить"
 
@@ -140,6 +140,14 @@ msgstr "Дата создания"
 #: task_manager/tasks/models.py:44
 msgid "modified at"
 msgstr "дата изменения"
+
+#: task_manager/labels/models.py:20
+msgid "label"
+msgstr "метка"
+
+#: task_manager/labels/models.py:21 task_manager/tasks/models.py:49
+msgid "labels"
+msgstr "метки"
 
 #: task_manager/labels/templates/labels/label_confirm_delete.html:6
 #: task_manager/labels/templates/labels/label_form.html:6
@@ -171,22 +179,27 @@ msgstr "Вы уверены, что хотите удалить"
 msgid "Go back!"
 msgstr "Вернуться!"
 
-#: task_manager/labels/templates/labels/label_list.html:19
+#: task_manager/labels/templates/labels/label_list.html:20
 msgid "Label name"
 msgstr "Название метки"
 
-#: task_manager/labels/templates/labels/label_list.html:20
-#: task_manager/statuses/templates/statuses/status_list.html:20
-#: task_manager/users/templates/users/user_list.html:16
+#: task_manager/labels/templates/labels/label_list.html:21
+#: task_manager/statuses/templates/statuses/status_list.html:21
+#: task_manager/users/templates/users/user_list.html:17
 msgid "Creat at"
 msgstr "Дата регистрации"
 
-#: task_manager/labels/templates/labels/label_list.html:21
-#: task_manager/statuses/templates/statuses/status_list.html:21
+#: task_manager/labels/templates/labels/label_list.html:22
+#: task_manager/statuses/templates/statuses/status_list.html:22
 #: task_manager/tasks/templates/tasks/task_detail.html:37
 #: task_manager/tasks/templates/tasks/task_filter.html:33
 msgid "Modified at"
 msgstr "Изменён"
+
+#: task_manager/labels/templates/labels/label_list.html:45
+#: task_manager/tasks/templates/tasks/task_detail.html:47
+msgid "No labels"
+msgstr "Нет меток"
 
 #: task_manager/statuses/constants.py:39 task_manager/statuses/constants.py:41
 #: task_manager/templates/components/navbar.html:14
@@ -258,9 +271,13 @@ msgstr "статус"
 msgid "statuses"
 msgstr "статусы"
 
-#: task_manager/statuses/templates/statuses/status_list.html:19
+#: task_manager/statuses/templates/statuses/status_list.html:20
 msgid "Status name"
 msgstr "Название"
+
+#: task_manager/statuses/templates/statuses/status_list.html:45
+msgid "No statuses"
+msgstr "Нет статусов"
 
 #: task_manager/tasks/constants.py:42 task_manager/tasks/constants.py:44
 #: task_manager/templates/components/navbar.html:20
@@ -360,10 +377,6 @@ msgstr "автор"
 msgid "executor"
 msgstr "исполнитель"
 
-#: task_manager/tasks/models.py:49
-msgid "labels"
-msgstr "метки"
-
 #: task_manager/tasks/models.py:52
 msgid "You can select multiple labels."
 msgstr "Вы можете выбрать несколько меток"
@@ -402,10 +415,6 @@ msgstr "Статус"
 #: task_manager/tasks/templates/tasks/task_detail.html:32
 msgid "Created at"
 msgstr "Дата создания"
-
-#: task_manager/tasks/templates/tasks/task_detail.html:47
-msgid "No labels"
-msgstr "Нет меток"
 
 #: task_manager/tasks/templates/tasks/task_detail.html:53
 msgid "Description"
@@ -562,10 +571,14 @@ msgstr "Да, удалить"
 msgid "No, stay and go back!"
 msgstr "Нет, остаться и вернуться!"
 
-#: task_manager/users/templates/users/user_list.html:14
+#: task_manager/users/templates/users/user_list.html:15
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: task_manager/users/templates/users/user_list.html:15
+#: task_manager/users/templates/users/user_list.html:16
 msgid "Full name"
 msgstr "Полное имя"
+
+#: task_manager/users/templates/users/user_list.html:40
+msgid "No users"
+msgstr "Нет пользователей"

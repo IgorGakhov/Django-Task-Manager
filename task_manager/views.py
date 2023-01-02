@@ -6,17 +6,17 @@ from .constants import HOME, MSG_LOGIN, MSG_LOGOUT, TEMPLATE_INDEX
 
 
 class HomePageView(TemplateView):
-    "Main page."
+    '''Main page.'''
     template_name: str = TEMPLATE_INDEX
 
 
 class UserLoginView(SuccessMessageMixin, LoginView):
-    "Log in into Task Manager."
+    '''Log in into Task Manager.'''
     next_page: str = HOME
-    success_message = MSG_LOGIN
+    success_message: str = MSG_LOGIN
 
 
 class UserLogoutView(SuccessMessageMixin, LogoutView):
-    "Log out from Task Manager."
+    '''Log out from Task Manager.'''
     next_page: str = HOME
-    success_message = MSG_LOGOUT
+    success_message: str = MSG_LOGOUT

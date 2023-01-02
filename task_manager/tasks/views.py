@@ -1,43 +1,35 @@
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.forms.forms import BaseForm
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from typing import Dict, Any, Tuple, Union, Callable, Type
 
 from django_filters.views import FilterView
 
 from .filters import TasksFilter
 from .models import Task, User
-from .constants import REVERSE_TASKS, REVERSE_LOGIN, \
+from .constants import REVERSE_TASKS, \
     CONTEXT_LIST, CONTEXT_CREATE, CONTEXT_UPDATE, CONTEXT_DELETE, CONTEXT_DETAIL, \
-    MSG_CREATED, MSG_UPDATED, MSG_DELETED, MSG_NO_PERMISSION, \
-    MSG_NOT_AUTHOR_FOR_DELETE_TASK, NAME, STATUS, DESCRIPTION, EXECUTOR, LABELS
+    MSG_CREATED, MSG_UPDATED, MSG_DELETED, MSG_NOT_AUTHOR_FOR_DELETE_TASK, \
+    NAME, STATUS, DESCRIPTION, EXECUTOR, LABELS
+from ..mixins import AuthorizationPermissionMixin
 
 
-class TasksListView(LoginRequiredMixin, FilterView):
+class TasksListView(AuthorizationPermissionMixin, FilterView):
     '''Show the list of tasks.'''
     model: Type[Task] = Task
     context_object_name: str = 'tasks'
-    filterset_class = TasksFilter
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        '''Sets additional meta information.'''
-        context: Dict[str, Any] = super().get_context_data(**kwargs)
-        context.update(CONTEXT_LIST)
-        return context
-
-    def handle_no_permission(self) -> HttpResponseRedirect:
-        '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, MSG_NO_PERMISSION)
-        return redirect(REVERSE_LOGIN)
+    extra_context: Dict = CONTEXT_LIST
+    filterset_class: Type[TasksFilter] = TasksFilter
 
 
-class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class TaskCreateView(AuthorizationPermissionMixin,
+                     SuccessMessageMixin, CreateView):
     '''Create a task.'''
     model: Type[Task] = Task
+    extra_context: Dict = CONTEXT_CREATE
     fields: Tuple = (NAME, STATUS, DESCRIPTION, EXECUTOR, LABELS)
     success_url: Union[str, Callable[..., Any]] = REVERSE_TASKS
     success_message: str = MSG_CREATED
@@ -48,41 +40,23 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.author: BaseForm[User] = User.objects.get(id=user.id)
         return super(TaskCreateView, self).form_valid(form)
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        '''Sets additional meta information and a button.'''
-        context: Dict[str, Any] = super().get_context_data(**kwargs)
-        context.update(CONTEXT_CREATE)
-        return context
 
-    def handle_no_permission(self) -> HttpResponseRedirect:
-        '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, MSG_NO_PERMISSION)
-        return redirect(REVERSE_LOGIN)
-
-
-class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class TaskUpdateView(AuthorizationPermissionMixin,
+                     SuccessMessageMixin, UpdateView):
     '''Change a task.'''
     model: Type[Task] = Task
+    extra_context: Dict = CONTEXT_UPDATE
     fields: Tuple = (NAME, STATUS, DESCRIPTION, EXECUTOR, LABELS)
     success_url: Union[str, Callable[..., Any]] = REVERSE_TASKS
     success_message: str = MSG_UPDATED
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        '''Sets additional meta information and a button.'''
-        context: Dict[str, Any] = super().get_context_data(**kwargs)
-        context.update(CONTEXT_UPDATE)
-        return context
 
-    def handle_no_permission(self) -> HttpResponseRedirect:
-        '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, MSG_NO_PERMISSION)
-        return redirect(REVERSE_LOGIN)
-
-
-class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class TaskDeleteView(AuthorizationPermissionMixin,
+                     SuccessMessageMixin, DeleteView):
     '''Delete a task.'''
     model: Type[Task] = Task
     context_object_name: str = 'task'
+    extra_context: Dict = CONTEXT_DELETE
     success_url: Union[str, Callable[..., Any]] = REVERSE_TASKS
     success_message: str = MSG_DELETED
 
@@ -95,28 +69,7 @@ class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
             return redirect(REVERSE_TASKS)
         return super().dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        '''Sets additional meta information and a button.'''
-        context: Dict[str, Any] = super().get_context_data(**kwargs)
-        context.update(CONTEXT_DELETE)
-        return context
 
-    def handle_no_permission(self) -> HttpResponseRedirect:
-        '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, MSG_NO_PERMISSION)
-        return redirect(REVERSE_LOGIN)
-
-
-class TaskDetailView(LoginRequiredMixin, DetailView):
+class TaskDetailView(AuthorizationPermissionMixin, DetailView):
     model: Type[Task] = Task
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        '''Sets additional meta information and a button.'''
-        context: Dict[str, Any] = super().get_context_data(**kwargs)
-        context.update(CONTEXT_DETAIL)
-        return context
-
-    def handle_no_permission(self) -> HttpResponseRedirect:
-        '''Sets rules when a page is unavailable to an unauthorized user.'''
-        messages.warning(self.request, MSG_NO_PERMISSION)
-        return redirect(REVERSE_LOGIN)
+    extra_context: Dict = CONTEXT_DETAIL

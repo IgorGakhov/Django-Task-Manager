@@ -56,7 +56,7 @@ class UsersTest(TestCase):
         self.assertEqual(user3.first_name, 'Hermione Jean')
         self.assertEqual(user3.last_name, 'Granger')
 
-    def test_users_model_representation(self) -> None:
+    def test_user_model_representation(self) -> None:
         response: HttpResponse = self.client.get(REVERSE_USERS)
 
         users_list: List = list(response.context['users'])
@@ -196,7 +196,7 @@ class UsersTest(TestCase):
     # UPDATE VIEW TESTING
 
     def test_user_update_view(self) -> None:
-        ROUTE = reverse_lazy(UPDATE_USER, args=[1])
+        ROUTE = reverse_lazy(UPDATE_USER, args=[self.user1.id])
 
         self.client.force_login(self.user1)
         response: HttpResponse = self.client.get(ROUTE)
@@ -204,7 +204,7 @@ class UsersTest(TestCase):
         self.assertTemplateUsed(response, template_name=TEMPLATE_UPDATE)
 
     def test_user_update(self) -> None:
-        ROUTE = reverse_lazy(UPDATE_USER, args=[1])
+        ROUTE = reverse_lazy(UPDATE_USER, args=[self.user1.id])
 
         original_objs_count: int = len(User.objects.all())
         params: Dict[str, str] = UsersTest.VALID_DATA
@@ -217,7 +217,7 @@ class UsersTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_USERS)
 
-        updated_user: User = User.objects.get(id=1)
+        updated_user: User = User.objects.get(id=self.user1.id)
         self.assertEqual(updated_user.username, params['username'])
         self.assertEqual(updated_user.first_name, params['first_name'])
         self.assertEqual(updated_user.last_name, params['last_name'])
@@ -226,7 +226,7 @@ class UsersTest(TestCase):
     # DELETE VIEW TESTING
 
     def test_user_delete_view(self) -> None:
-        ROUTE = reverse_lazy(DELETE_USER, args=[1])
+        ROUTE = reverse_lazy(DELETE_USER, args=[self.user1.id])
 
         self.client.force_login(self.user1)
         response: HttpResponse = self.client.get(ROUTE)
@@ -234,7 +234,7 @@ class UsersTest(TestCase):
         self.assertTemplateUsed(response, template_name=TEMPLATE_DELETE)
 
     def test_user_delete(self) -> None:
-        ROUTE = reverse_lazy(DELETE_USER, args=[1])
+        ROUTE = reverse_lazy(DELETE_USER, args=[self.user1.id])
 
         original_objs_count: int = len(User.objects.all())
 
@@ -245,4 +245,4 @@ class UsersTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_USERS)
         with self.assertRaises(ObjectDoesNotExist):
-            User.objects.get(id=1)
+            User.objects.get(id=self.user1.id)

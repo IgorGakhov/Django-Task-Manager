@@ -16,5 +16,9 @@ class Label(models.Model):
         auto_now=True
     )
 
+    class Meta:
+        verbose_name: str = gettext_lazy('label')
+        verbose_name_plural: str = gettext_lazy('labels')
+
     def __str__(self) -> str:
         return self.name

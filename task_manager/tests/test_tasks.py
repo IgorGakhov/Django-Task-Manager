@@ -97,7 +97,7 @@ class TasksTest(TestCase):
             'Upload the archive with the code to the cloud drive and give access to Galya.'
         )
 
-    def test_users_model_representation(self) -> None:
+    def test_task_model_representation(self) -> None:
         response: HttpResponse = self.client.get(REVERSE_TASKS)
 
         tasks_list: List = list(response.context['tasks'])
@@ -272,14 +272,14 @@ class TasksTest(TestCase):
     # UPDATE VIEW TESTING
 
     def test_task_update_view(self) -> None:
-        ROUTE = reverse_lazy(UPDATE_TASK, args=[1])
+        ROUTE = reverse_lazy(UPDATE_TASK, args=[self.task1.id])
 
         response: HttpResponse = self.client.get(ROUTE)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, template_name=TEMPLATE_UPDATE)
 
     def test_task_update(self) -> None:
-        ROUTE = reverse_lazy(UPDATE_TASK, args=[1])
+        ROUTE = reverse_lazy(UPDATE_TASK, args=[self.task1.id])
 
         original_objs_count: int = len(Task.objects.all())
         params: Dict[str, str] = TasksTest.VALID_DATA
@@ -291,13 +291,13 @@ class TasksTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, REVERSE_TASKS)
 
-        updated_task: Task = Task.objects.get(id=1)
+        updated_task: Task = Task.objects.get(id=self.task1.id)
         self.assertEqual(updated_task.name, params['name'])
 
     # DELETE VIEW TESTING
 
     def test_task_delete_view(self) -> None:
-        ROUTE = reverse_lazy(DELETE_TASK, args=[1])
+        ROUTE = reverse_lazy(DELETE_TASK, args=[self.task1.id])
 
         response: HttpResponse = self.client.get(ROUTE)
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -318,7 +318,7 @@ class TasksTest(TestCase):
             Task.objects.get(id=self.task3.id)
 
     def test_not_self_task_delete(self) -> None:
-        ROUTE = reverse_lazy(DELETE_TASK, args=[3])
+        ROUTE = reverse_lazy(DELETE_TASK, args=[self.task3.id])
         original_objs_count: int = len(Task.objects.all())
         # GET
         get_response: HttpResponse = self.client.get(ROUTE)
@@ -331,7 +331,7 @@ class TasksTest(TestCase):
             expected_message=MSG_NOT_AUTHOR_FOR_DELETE_TASK
         )
         # POST
-        post_response: HttpResponse = self.client.post(ROUTE, follow=True)
+        post_response: HttpResponse = self.client.post(ROUTE)
         final_objs_count: int = len(Task.objects.all())
         self.assertTrue(final_objs_count == original_objs_count)
         self.assertRedirects(post_response, REVERSE_TASKS)
