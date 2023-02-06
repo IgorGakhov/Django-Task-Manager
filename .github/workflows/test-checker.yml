@@ -20,6 +20,11 @@ jobs:
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DEBUG: ${{ secrets.DEBUG }}
+        PGDATABASE: ${{ secrets.PGDATABASE }}
+        PGUSER: ${{ secrets.PGUSER }}
+        PGPASSWORD: ${{ secrets.PGPASSWORD }}
+        PGHOST: ${{ secrets.PGHOST }}
+        PGPORT: ${{ secrets.PGPORT }}
       run: make test
     - name: Publish code coverage report
       uses: paambaati/codeclimate-action@v3.0.0
