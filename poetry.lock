@@ -150,6 +150,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "psycopg2-binary"
+version = "2.9.5"
+description = "psycopg2 - Python-PostgreSQL Database Adapter"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "pycodestyle"
 version = "2.9.1"
 description = "Python style guide checker"
@@ -265,7 +273,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "38f713707f2693859daf6877bf25fe0eafc96b7d122b072d8966c9a3a21622d3"
+content-hash = "388228421ce661d3131ce1567b77d121df62d11bcb1a80dfa797b3cc9b310a10"
 
 [metadata.files]
 asgiref = []
@@ -281,6 +289,7 @@ flake8 = []
 gunicorn = []
 idna = []
 mccabe = []
+psycopg2-binary = []
 pycodestyle = []
 pyflakes = []
 python-dotenv = []
