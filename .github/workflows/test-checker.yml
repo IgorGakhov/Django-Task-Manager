@@ -19,6 +19,7 @@ jobs:
     - name: Run test checks
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DEBUG: ${{ secrets.DEBUG }}
       run: make test
     - name: Publish code coverage report
       uses: paambaati/codeclimate-action@v3.0.0
