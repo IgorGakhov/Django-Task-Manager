@@ -509,7 +509,7 @@ msgstr "Изменение пользователя в Менеджере зад
 
 #: task_manager/users/constants.py:50
 msgid "User change"
-msgstr "Имя пользователя"
+msgstr "Изменение пользователя"
 
 #: task_manager/users/constants.py:52
 msgid "User deleting"
