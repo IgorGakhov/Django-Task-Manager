@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-02 13:55+0300\n"
+"POT-Creation-Date: 2023-02-08 15:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -479,9 +479,13 @@ msgstr "Вход в Менеджер задач."
 
 #: task_manager/templates/registration/login.html:6
 #: task_manager/templates/registration/login.html:9
-#: task_manager/templates/registration/login.html:13
 msgid "Login"
 msgstr "Вход"
+
+#: task_manager/templates/registration/login.html:13
+msgctxt "Login button"
+msgid "Login"
+msgstr "Войти"
 
 #: task_manager/users/constants.py:41
 msgid "List of Task Manager Users."

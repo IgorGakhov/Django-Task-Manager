@@ -3,6 +3,7 @@ __pycache__
 .env
 .venv
 dist
+.python-version
 .coverage
 coverage.xml
 db.sqlite3
