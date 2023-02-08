@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 15:58+0300\n"
+"POT-Creation-Date: 2023-02-08 19:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -551,23 +551,23 @@ msgstr "Имя"
 msgid "Last Name"
 msgstr "Фамилия"
 
-#: task_manager/users/constants.py:77
+#: task_manager/users/constants.py:78
 msgid "Required. Please enter your real name."
 msgstr "Пожалуйста, введите настоящее имя."
 
-#: task_manager/users/constants.py:78
+#: task_manager/users/constants.py:79
 msgid "Required. Please enter your real surname."
 msgstr "Пожалуйста, введите настоящую фамилию."
 
-#: task_manager/users/constants.py:82
+#: task_manager/users/constants.py:83
 msgid "Register"
 msgstr "Зарегистрировать"
 
-#: task_manager/users/constants.py:83
-msgid "Change"
-msgstr "Обновить"
-
 #: task_manager/users/constants.py:84
+msgid "Change"
+msgstr "Изменить"
+
+#: task_manager/users/constants.py:85
 msgid "Yes, delete"
 msgstr "Да, удалить"
 
