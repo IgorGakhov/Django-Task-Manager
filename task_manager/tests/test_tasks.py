@@ -181,7 +181,7 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('name', errors)
         self.assertEqual(
-            ['This field is required.'],
+            ['Обязательное поле.'],
             errors['name']
         )
 
@@ -193,8 +193,8 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('name', errors)
         self.assertEqual(
-            ['Ensure this value has at most 50 characters ' +
-                '(it has {}).'.format(len(params['name']))],
+            ['Убедитесь, что это значение содержит не более 50 символов ' +
+                '(сейчас {}).'.format(len(params['name']))],
             errors['name']
         )
 
@@ -206,7 +206,7 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('status', errors)
         self.assertEqual(
-            ['This field is required.'],
+            ['Обязательное поле.'],
             errors['status']
         )
 
@@ -218,7 +218,7 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('status', errors)
         self.assertEqual(
-            ['Select a valid choice. That choice is not one of the available choices.'],
+            ['Выберите корректный вариант. Вашего варианта нет среди допустимых значений.'],
             errors['status']
         )
 
@@ -230,7 +230,7 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('description', errors)
         self.assertEqual(
-            ['This field is required.'],
+            ['Обязательное поле.'],
             errors['description']
         )
 
@@ -242,8 +242,8 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('description', errors)
         self.assertEqual(
-            ['Ensure this value has at most 5000 characters ' +
-                '(it has {}).'.format(len(params['description']))],
+            ['Убедитесь, что это значение содержит не более 5000 символов ' +
+                '(сейчас {}).'.format(len(params['description']))],
             errors['description']
         )
 
@@ -255,7 +255,7 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('executor', errors)
         self.assertEqual(
-            ['Select a valid choice. That choice is not one of the available choices.'],
+            ['Выберите корректный вариант. Вашего варианта нет среди допустимых значений.'],
             errors['executor']
         )
 

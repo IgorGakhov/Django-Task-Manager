@@ -91,7 +91,7 @@ class LabelsTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('name', errors)
         self.assertEqual(
-            ['This field is required.'],
+            ['Обязательное поле.'],
             errors['name']
         )
 
@@ -103,8 +103,8 @@ class LabelsTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('name', errors)
         self.assertEqual(
-            ['Ensure this value has at most 100 characters ' +
-                '(it has {}).'.format(len(params['name']))],
+            ['Убедитесь, что это значение содержит не более 100 символов ' +
+                '(сейчас {}).'.format(len(params['name']))],
             errors['name']
         )
 

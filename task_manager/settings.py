@@ -107,10 +107,8 @@ DATABASES = {
     }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
-AUTH_USER_MODEL = 'users.User'
+if not DEBUG:  # pragma: no cover
+    DATABASES["default"] = dj_database_url.config(conn_max_age=500)
 
 
 # Deployment:
@@ -134,6 +132,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 
 # Bug tracking and monitoring solution

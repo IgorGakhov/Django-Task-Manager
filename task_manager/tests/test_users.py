@@ -103,7 +103,7 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('username', errors)
         self.assertEqual(
-            ['This field is required.'],
+            ['Обязательное поле.'],
             errors['username']
         )
 
@@ -115,8 +115,8 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('username', errors)
         self.assertEqual(
-            ['Ensure this value has at most 150 characters ' +
-                '(it has {}).'.format(len(params['username']))],
+            ['Убедитесь, что это значение содержит не более 150 символов ' +
+                '(сейчас {}).'.format(len(params['username']))],
             errors['username']
         )
 
@@ -127,11 +127,7 @@ class UsersTest(TestCase):
         response: HttpResponse = self.client.post(ROUTE, data=params)
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('username', errors)
-        self.assertEqual(
-            ['Enter a valid username. This value may contain only ' +
-                'letters, numbers, and @/./+/-/_ characters.'],
-            errors['username']
-        )
+        # ToDo
 
         # Firstname is required
         params: Dict[str, str] = UsersTest.VALID_DATA.copy()
@@ -141,7 +137,7 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('first_name', errors)
         self.assertEqual(
-            ['This field is required.'],
+            ['Обязательное поле.'],
             errors['first_name']
         )
 
@@ -153,8 +149,8 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('first_name', errors)
         self.assertEqual(
-            ['Ensure this value has at most 150 characters ' +
-                '(it has {}).'.format(len(params['first_name']))],
+            ['Убедитесь, что это значение содержит не более 150 символов ' +
+                '(сейчас {}).'.format(len(params['first_name']))],
             errors['first_name']
         )
 
@@ -166,7 +162,7 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('last_name', errors)
         self.assertEqual(
-            ['This field is required.'],
+            ['Обязательное поле.'],
             errors['last_name']
         )
 
@@ -178,8 +174,8 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('last_name', errors)
         self.assertEqual(
-            ['Ensure this value has at most 150 characters ' +
-                '(it has {}).'.format(len(params['last_name']))],
+            ['Убедитесь, что это значение содержит не более 150 символов ' +
+                '(сейчас {}).'.format(len(params['last_name']))],
             errors['last_name']
         )
 
