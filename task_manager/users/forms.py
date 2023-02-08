@@ -1,9 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import User
 from .constants import USERNAME, FIRST_NAME, LAST_NAME, EMAIL, \
-    FIRST_NAME_LABEL, LAST_NAME_LABEL, \
+    FIRST_NAME_LABEL, LAST_NAME_LABEL, EMAIL_LABEL, \
     FIRST_NAME_HELP_TEXT, LAST_NAME_HELP_TEXT
 
 
@@ -20,8 +20,9 @@ class UserRegistrationForm(UserCreationForm):
         fields = (USERNAME, FIRST_NAME, LAST_NAME)
 
 
-class UserEditingForm(UserChangeForm):
+class UserEditingForm(UserRegistrationForm):
+    email = forms.EmailField(label=EMAIL_LABEL)
 
-    class Meta(UserChangeForm.Meta):
+    class Meta(UserCreationForm.Meta):
         model = User
         fields = (USERNAME, FIRST_NAME, LAST_NAME, EMAIL)

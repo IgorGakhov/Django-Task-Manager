@@ -73,6 +73,7 @@ PASSWORD2: Final[str] = 'password2'
 # Labels
 FIRST_NAME_LABEL: str = gettext_lazy('First Name')
 LAST_NAME_LABEL: str = gettext_lazy('Last Name')
+EMAIL_LABEL: str = 'Email'
 # Help texts
 FIRST_NAME_HELP_TEXT: str = gettext_lazy('Required. Please enter your real name.')
 LAST_NAME_HELP_TEXT: str = gettext_lazy('Required. Please enter your real surname.')
