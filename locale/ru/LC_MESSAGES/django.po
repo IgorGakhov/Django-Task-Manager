@@ -561,7 +561,7 @@ msgstr "Пожалуйста, введите настоящую фамилию."
 
 #: task_manager/users/constants.py:82
 msgid "Register"
-msgstr "Зарегистрироваться"
+msgstr "Зарегистрировать"
 
 #: task_manager/users/constants.py:83
 msgid "Change"
