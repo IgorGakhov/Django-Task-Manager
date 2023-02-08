@@ -113,7 +113,7 @@ msgstr "Создать"
 #: task_manager/tasks/templates/tasks/task_filter.html:48
 #: task_manager/users/templates/users/user_list.html:30
 msgid "Update"
-msgstr "Обновить"
+msgstr "Изменить"
 
 #: task_manager/labels/constants.py:71
 #: task_manager/labels/templates/labels/label_list.html:38
