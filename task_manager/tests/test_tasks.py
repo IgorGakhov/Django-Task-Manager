@@ -193,8 +193,8 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('name', errors)
         self.assertEqual(
-            ['Убедитесь, что это значение содержит не более 50 символов ' +
-                '(сейчас {}).'.format(len(params['name']))],
+            ['Убедитесь, что это значение содержит не более 50 символов '
+                + '(сейчас {}).'.format(len(params['name']))],
             errors['name']
         )
 
@@ -242,8 +242,8 @@ class TasksTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('description', errors)
         self.assertEqual(
-            ['Убедитесь, что это значение содержит не более 5000 символов ' +
-                '(сейчас {}).'.format(len(params['description']))],
+            ['Убедитесь, что это значение содержит не более 5000 символов '
+                + '(сейчас {}).'.format(len(params['description']))],
             errors['description']
         )
 

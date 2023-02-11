@@ -103,8 +103,8 @@ class StatusesTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('name', errors)
         self.assertEqual(
-            ['Убедитесь, что это значение содержит не более 40 символов ' +
-                '(сейчас {}).'.format(len(params['name']))],
+            ['Убедитесь, что это значение содержит не более 40 символов '
+                + '(сейчас {}).'.format(len(params['name']))],
             errors['name']
         )
 

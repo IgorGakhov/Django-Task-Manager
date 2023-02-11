@@ -103,8 +103,8 @@ class LabelsTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('name', errors)
         self.assertEqual(
-            ['Убедитесь, что это значение содержит не более 100 символов ' +
-                '(сейчас {}).'.format(len(params['name']))],
+            ['Убедитесь, что это значение содержит не более 100 символов '
+                + '(сейчас {}).'.format(len(params['name']))],
             errors['name']
         )
 

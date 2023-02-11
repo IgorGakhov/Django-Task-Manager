@@ -115,8 +115,8 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('username', errors)
         self.assertEqual(
-            ['Убедитесь, что это значение содержит не более 150 символов ' +
-                '(сейчас {}).'.format(len(params['username']))],
+            ['Убедитесь, что это значение содержит не более 150 символов '
+                + '(сейчас {}).'.format(len(params['username']))],
             errors['username']
         )
 
@@ -149,8 +149,8 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('first_name', errors)
         self.assertEqual(
-            ['Убедитесь, что это значение содержит не более 150 символов ' +
-                '(сейчас {}).'.format(len(params['first_name']))],
+            ['Убедитесь, что это значение содержит не более 150 символов '
+                + '(сейчас {}).'.format(len(params['first_name']))],
             errors['first_name']
         )
 
@@ -174,8 +174,8 @@ class UsersTest(TestCase):
         errors: ErrorDict = response.context['form'].errors
         self.assertIn('last_name', errors)
         self.assertEqual(
-            ['Убедитесь, что это значение содержит не более 150 символов ' +
-                '(сейчас {}).'.format(len(params['last_name']))],
+            ['Убедитесь, что это значение содержит не более 150 символов '
+                + '(сейчас {}).'.format(len(params['last_name']))],
             errors['last_name']
         )
 
