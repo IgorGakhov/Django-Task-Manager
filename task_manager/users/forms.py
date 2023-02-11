@@ -21,7 +21,7 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class UserEditingForm(UserRegistrationForm):
-    email = forms.EmailField(label=EMAIL_LABEL)
+    email = forms.EmailField(label=EMAIL_LABEL, required=False)
 
     class Meta(UserCreationForm.Meta):
         model = User

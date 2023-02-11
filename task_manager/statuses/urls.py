@@ -8,6 +8,6 @@ from .constants import LIST_STATUSES, CREATE_STATUS, UPDATE_STATUS, DELETE_STATU
 urlpatterns: List[URLPattern] = [
     path('', StatusesListView.as_view(), name=LIST_STATUSES),
     path('create/', StatusCreateView.as_view(), name=CREATE_STATUS),
-    path('<pk>/update/', StatusUpdateView.as_view(), name=UPDATE_STATUS),
-    path('<pk>/delete/', StatusDeleteView.as_view(), name=DELETE_STATUS),
+    path('<int:pk>/update/', StatusUpdateView.as_view(), name=UPDATE_STATUS),
+    path('<int:pk>/delete/', StatusDeleteView.as_view(), name=DELETE_STATUS),
 ]
