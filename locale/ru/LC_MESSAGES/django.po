@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 19:06+0300\n"
+"POT-Creation-Date: 2023-02-11 21:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,16 +115,10 @@ msgstr "Создать"
 msgid "Update"
 msgstr "Изменить"
 
-#: task_manager/labels/constants.py:71
-#: task_manager/labels/templates/labels/label_list.html:38
-#: task_manager/statuses/constants.py:71
-#: task_manager/statuses/templates/statuses/status_list.html:38
-#: task_manager/tasks/constants.py:81
-#: task_manager/tasks/templates/tasks/task_detail.html:67
-#: task_manager/tasks/templates/tasks/task_filter.html:55
-#: task_manager/users/templates/users/user_list.html:33
-msgid "Delete"
-msgstr "Удалить"
+#: task_manager/labels/constants.py:71 task_manager/statuses/constants.py:71
+#: task_manager/tasks/constants.py:81 task_manager/users/constants.py:85
+msgid "Yes, delete"
+msgstr "Да, удалить"
 
 #: task_manager/labels/models.py:7 task_manager/statuses/models.py:7
 #: task_manager/tasks/models.py:11
@@ -195,6 +189,14 @@ msgstr "Дата регистрации"
 #: task_manager/tasks/templates/tasks/task_filter.html:33
 msgid "Modified at"
 msgstr "Изменён"
+
+#: task_manager/labels/templates/labels/label_list.html:38
+#: task_manager/statuses/templates/statuses/status_list.html:38
+#: task_manager/tasks/templates/tasks/task_detail.html:67
+#: task_manager/tasks/templates/tasks/task_filter.html:55
+#: task_manager/users/templates/users/user_list.html:33
+msgid "Delete"
+msgstr "Удалить"
 
 #: task_manager/labels/templates/labels/label_list.html:45
 #: task_manager/tasks/templates/tasks/task_detail.html:47
@@ -566,10 +568,6 @@ msgstr "Зарегистрировать"
 #: task_manager/users/constants.py:84
 msgid "Change"
 msgstr "Изменить"
-
-#: task_manager/users/constants.py:85
-msgid "Yes, delete"
-msgstr "Да, удалить"
 
 #: task_manager/users/templates/users/user_confirm_delete.html:16
 msgid "No, stay and go back!"

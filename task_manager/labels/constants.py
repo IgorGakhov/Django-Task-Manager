@@ -68,7 +68,7 @@ NAME: Final[str] = 'name'
 # Buttons
 CREATION_BUTTON: str = gettext_lazy('Create')
 UPDATE_BUTTON: str = gettext_lazy('Update')
-DELETE_BUTTON: str = gettext_lazy('Delete')
+DELETE_BUTTON: str = gettext_lazy('Yes, delete')
 
 
 # Contexts
