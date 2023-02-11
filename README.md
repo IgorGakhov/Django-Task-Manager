@@ -14,6 +14,7 @@ List of dependencies, without which the project code will not work correctly:
 - Django = "^4.1.3"
 - django-bootstrap4 = "^22.2"
 - django-filter = "^22.1"
+- dj-database-url = "0.5.0"
 - gunicorn = "^20.1.0"
 - psycopg2-binary = "^2.9.5"
 - whitenoise = "^6.2.0"
@@ -21,6 +22,16 @@ List of dependencies, without which the project code will not work correctly:
 
 ## Description
 **Task Manager** is a task management system. It allows you to set tasks, assign performers and change their statuses. Registration and authentication are required to work with the system.
+
+### Summary
+* [Description](#description)
+* [Installation for contributors](#installation-for-contributors)
+* [Usage](#usage)
+* [Development](#development)
+  * [Dev Dependencies](#dev-dependencies)
+  * [Project Organization](#project-organization)
+  * [Useful commands](#useful-commands)
+
 
 ___
 
