@@ -129,7 +129,7 @@ msgstr "Удалить"
 #: task_manager/labels/models.py:7 task_manager/statuses/models.py:7
 #: task_manager/tasks/models.py:11
 msgid "name"
-msgstr "название"
+msgstr "имя"
 
 #: task_manager/labels/models.py:11 task_manager/statuses/models.py:11
 #: task_manager/tasks/models.py:40
